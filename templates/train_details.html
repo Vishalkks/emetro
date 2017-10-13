@@ -1,0 +1,237 @@
+<html>
+  <head>
+    <title>Train Details</title>
+    <style type = "text/css">
+      body { background-image: url('images/bg1.jpeg') ; font-family: Century Schoolbook L; overflow: scroll}
+      table { background-color: #ADD8E6; border: 2px solid black; border-radius: 5px; border: 1; border-collapse: collapse }
+      td { padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; font-weight: bold; font-size: 1em; font-family: Century Schoolbook L; border: 1px solid black;} 
+      .links a{ color: white; font-weight: bold; font-family: Century Schoolbook L; text-decoration: none }
+      .links a:hover{ color: white; font-weight: bold; font-family: Century Schoolbook L; text-decoration: underline }
+      .top-border { padding: 10px; height: 30px; width: 1500px; background-color: #946905; margin-left: -10px; margin-top: -10px } 
+      h2 { font-family: URW Chancery L; font-size: 40px; color: #533c0e }   
+      
+      tr:nth-child(odd) { background-color: white; color: black }
+      tr:nth-child(even) { background-color: #858585; color: black}
+      th { background-color: black; color: white; font-weight: bold; font-family: Century Schoolbook L; border: 1px solid black; }
+      td:first-child { color: #000;}
+      tr:hover {
+                background-color: #b8faff;
+                -webkit-box-shadow: 0 6px 6px -6px #0E1119;
+	              -moz-box-shadow: 0 6px 6px -6px #0E1119;
+	              box-shadow: 0 6px 6px -6px #0E1119;
+               }
+
+     td:hover {
+                background-color: #212121;
+                color: white;
+                font-weight: bold;
+                
+                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
+                transform: translate3d(6px, -6px, 0);
+                
+                transition-delay: 0s;
+	              transition-duration: 0.4s;
+	              transition-property: all;
+                transition-timing-function: line;
+             }
+             
+       .fare_table { border: 2px solid black; border-radius: 5px; border: 1; border-collapse: collapse; width: 100%; height: 40% }
+       .fare_table td { padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; font-weight: bold; font-size: 1em; font-family: Century Schoolbook L; border: 1px solid black;}
+      .fare_table tr:nth-child(odd) { background-color: white; color: #0000d6 }
+      .fare_table tr:nth-child(even) { background-color: #c6c6fb; color: #0000d6}
+      .fare_table th { background-color: #9191f7; color: white; font-weight: bold; font-family: Century Schoolbook L; border: 1px solid black; }
+      .fare_table td:first-child { color: #0000d6; }
+      .fare_table tr:hover {
+                background-color: #b8faff;
+                -webkit-box-shadow: 0 6px 6px -6px #0E1119;
+	              -moz-box-shadow: 0 6px 6px -6px #0E1119;
+	              box-shadow: 0 6px 6px -6px #0E1119;
+               }
+
+     .fare_table td:hover {
+                background-color: #212121;
+                color: white;
+                font-weight: bold;
+                
+                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
+                transform: translate3d(6px, -6px, 0);
+                
+                transition-delay: 0s;
+	              transition-duration: 0.4s;
+	              transition-property: all;
+                transition-timing-function: line;
+             } 
+             
+       .schedule_table { border: 2px solid black; border-radius: 5px; border: 1; border-collapse: collapse; width: 100%; height: 40% }
+       .schedule_table td { padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; font-weight: bold; font-size: 1em; font-family: Century Schoolbook L; border: 1px solid black;}
+      .schedule_table tr:nth-child(odd) { background-color: white; color: #0000d6 }
+      .schedule_table tr:nth-child(even) { background-color: #c6c6fb; color: #0000d6}
+      .schedule_table th { background-color: #9191f7; color: white; font-weight: bold; font-family: Century Schoolbook L; border: 1px solid black; }
+      .schedule_table td:first-child { color: #0000d6; }
+      .schedule_table tr:hover {
+                background-color: #b8faff;
+                -webkit-box-shadow: 0 6px 6px -6px #0E1119;
+	              -moz-box-shadow: 0 6px 6px -6px #0E1119;
+	              box-shadow: 0 6px 6px -6px #0E1119;
+               }
+
+     .schedule_table td:hover {
+                background-color: #212121;
+                color: white;
+                font-weight: bold;
+                
+                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
+                transform: translate3d(6px, -6px, 0);
+                
+                transition-delay: 0s;
+	              transition-duration: 0.4s;
+	              transition-property: all;
+                transition-timing-function: line;
+             } 
+             
+    .express_fare_div, .ordinary_fare_div { border: 2px solid #0000d6; border-radius: 5px; width: 450px; height: 250px; position: absolute; margin-top: 30px; background-color: blue}
+    .schedule { border: 2px solid #0000d6; border-radius: 5px; width: 450px; height: 250px; position: absolute; margin-top: 40px; background-color: blue}   
+             
+    .fare_div { position: absolute; margin-left: 150px; }
+    .schedule_div { position: absolute; margin-left: 700px; margin-top: 0px; }
+    .express { border: 4px solid #6b0000; border-radius: 5px; width: 100px; height: 100px; font-family: URW Chancery L; font-weight: bold; background-color: white }
+    .ordinary { border: 4px solid #6b0000; border-radius: 5px; width: 100px; height: 100px; position: absolute; margin-left: 180px; margin-top: -110px; font-family: URW Chancery L; font-weight: bold; background-color: white } 
+    .express:hover, .ordinary:hover 
+              {
+                background-color: #b8faff;
+                color: black;
+                font-weight: bold;
+                
+                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
+                transform: translate3d(6px, -6px, 0);
+                
+                transition-delay: 0s;
+	              transition-duration: 0.4s;
+	              transition-property: all;
+                transition-timing-function: line;
+              }
+     .marquee { border: 4px solid #6b0000; border-radius: 5px; margin-left: 10px; margin-top: -50px; width: 300px; height: 300px; box-shadow: black 4px 4px; background-color: white; color: #533c0e; font-weight: bold; font-family: URW Chancery L; position: absolute }
+     
+     .route_map { border: 4px solid black; border-radius: 5px; box-shadow: black 4px 4px; width: 250px; height: 200px; margin-left: 900px; margin-top: -300px;}
+     
+.route_map:hover{
+                background-color: #b8faff;
+                color: black;
+                font-weight: bold;
+                
+                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
+                transform: translate3d(6px, -6px, 0);
+                
+                transition-delay: 0s;
+	              transition-duration: 0.4s;
+	              transition-property: all;
+                transition-timing-function: line;
+              }
+    </style>
+    
+    <script type = "text/javascript">
+    
+      function ordinary()
+      {
+        var ord = document.getElementById("ordinary");
+        ord.style.display = 'block';
+        var ex = document.getElementById("express");
+        ex.style.display = 'none';
+        var content = document.getElementById("content");
+        content.innerHTML = "Ordinary type fare details";
+      }
+      
+      function express()
+      {
+        var ord = document.getElementById("ordinary");
+        ord.style.display = 'none';
+        var ex = document.getElementById("express");
+        ex.style.display = 'block';
+        var content = document.getElementById("content");
+        content.innerHTML = "Express type fare details";
+      }
+      
+      function display_details(name)
+      {
+        //alert(name)
+        var d = document.getElementById('schedule');
+        d.style.display = 'block';
+        name.style.display = 'block';
+      }
+      
+      function hide_details(name)
+      {
+        //var d = document.getElementById(name);
+        name.style.display = 'none';
+      }
+      
+      function enlarge(x)
+      {
+        x.style.border = '2px solid red';
+        x.style.width = '150px';
+        x.style.height = '50px';
+        x.style.borderRadius = '4px';
+      }
+      
+      function normal(x)
+      {
+        x.style.border = '';
+        x.style.width = '150px';
+        x.style.height = '30px';
+        x.style.borderRadius = '';
+      }
+      
+      function change(x)
+      {
+        x.style.border = '2px solid black';
+        x.style.width = '150px';
+        x.style.height = '50px';
+        x.style.borderRadius = '4px';
+        x.style.backgroundColor = '#8aceff';
+      }
+      
+      function revert(x)
+      {
+        x.style.border = '';
+        x.style.width = '150px';
+        x.style.height = '30px';
+        x.style.borderRadius = '';
+        x.style.backgroundColor = '';
+      }
+      
+    </script>
+  </head>
+  
+  <body>
+    <div class = "top-border">
+      <p class = "links" ><a href = "http://127.0.0.1:5000/">Home</a></p>
+    </div>
+    
+    <center><h2>ROUTES DETAILS</h2></center>
+    <center><img src = "images/border.png" height = "50px" width = "400px" style = "margin-top: -37px"/></center>
+    <br/>
+    <div class = "marquee" style = "margin-top: 170px">
+      <h4 style = "font-family: Century Schoolbook L; color: black">Alerts and Updates</h4>
+      <marquee behavior="scroll" direction="up" scrollamount = "5">
+      <p>As per Ministry of Railways, 0.5% discount in base fare of season tickets shall be granted in case of digital payment w.e.f. 01-      Jan-2017.</p>
+      <hr/>
+      <p>Aadhaar verification for getting concessional tickets for Senior Citizens shall be on Voluntary basis from 1st January 2017 and Mandatory from 1st April 2017.</p>
+      <hr/>
+      <p>All India Security Help line No. 182: This facility enables the Railway passengers to avail immediate security related assistance from any place including Trains and Railway premises.</p>
+      <hr/>
+      <p>In case of partial cancellation, diversion or short termination of trains, E-Ticket passengers are required to file TDR as per refund rules to claim the refund.
+      </p><hr/>
+      <p>SMS delivery is subject to effective transmission from your mobile service operator and mobile carrier network availability. In case, you have not received Booking SMS, Please check “Booked Ticket History” before proceeding for new ticket booking.</p>
+      <hr/>
+      </marquee>
+    </div>
+    <center><h3 style = "font-family: URW Chancery L; font-size: 20px; color: #533c0e">ROUTE MAP</h3></center><br/>
+    <img src = "images/routes.jpg" width = "40%" height = "70%" style = "margin-left: 400px"/>
+    
+    
+    <br/>
+    
+    <br/>
+   
+  </body>
+</html>

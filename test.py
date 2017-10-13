@@ -1,0 +1,12 @@
+import sqlite3
+conn = sqlite3.connect('Emetro.db')
+print("Opened database successfully")
+conn.execute("INSERT INTO train VALUES( 'BNM011', 'Lalbagh', 'Penya', '1', 'Green', '15.30')")
+conn.execute("INSERT INTO train VALUES( 'BNM012', 'Lalbagh', 'Penya', '2', 'Green', '15.45')" )
+conn.execute("INSERT INTO train VALUES( 'BNM013', 'Lalbagh', 'Rajajinagar', '3', 'Green', '9.15')")
+conn.execute("INSERT INTO train VALUES( 'BNM014', 'Lalbagh', 'Rajajinagar', '4', 'Green', '9.30')")
+conn.execute("INSERT INTO train VALUES( 'BNM015', 'Lalbagh', 'Rajajinagar', '3', 'Green', '15.30')")
+conn.execute("INSERT INTO train VALUES( 'BNM016', 'Lalbagh', 'Rajajinagar', '4', 'Green', '15.45')")
+conn.commit()
+print("Table created successfully")
+conn.close()
