@@ -18,6 +18,7 @@
       th { background-color: black; color: white; font-weight: bold; font-family: Century Schoolbook L; border: 1px solid black; }
       td:first-child { color: #000;}
       .table_div { border: 2px solid black; border-radius: 4px; width: 350px; height: 170px; margin-top: -15px}
+      .table_div2 { border: 2px solid black; border-radius: 4px; width: 350px; height: 70px; margin-top: -15px}
       .details_div { border: 2px solid black; border-radius: 4px; width: 750px; height: 200px; margin-left: 10px}
       tr:hover {
                 background-color: #b8faff;
@@ -108,77 +109,81 @@
     </div>
     <div class = "booking_div" id = "booking_div">
       <center>
-      <h1 style = "color: blue; font-family: Century Schoolbook L" id = "heading">Trains between stations</h1>
-      <form method = "post" action = "http://127.0.0.1:5000/traintable" id = "form">
+      <h1 style = "color: blue; font-family: Century Schoolbook L" id = "heading">Train Selection Details</h1>
+      <h3 style = "color: red; font-family: Century Schoolbook L" id = "heading">Source : {{source}} </h3>
+      <h3 style = "color: red; font-family: Century Schoolbook L" id = "heading">Destination : {{destination}} </h3>
+      <h3 style = "color: red; font-family: Century Schoolbook L" id = "heading">Timings : {{time}} </h3>
+      <hr/>
+      <br/>
+      <h1 style = "color: blue; font-family: Century Schoolbook L" id = "heading">Price Details</h1>
       <div class = "table_div">
         <table>
+        	<thead>
+        		<tr>
+        			<th>Source</th>
+        			<th>Destination</th>
+        			<th>Timings</th>
+        			<th>Price</th>
+        		</tr>
+        	</thead>
+        <tbody>	
           <tr>
-            <td>Select source</td>
-            <td>
-                <select name = "source" onfocus = "enlarge(this)" onblur = "normal(this)" style = "widht:150px;height:30px">
-                  <option selected = "selected"></option>
-                  <option>Jayanagar</option>
-                  <option>Lalbagh</option>
-                </select>
-            </td>
+            <td>{{source}}</td>
+            <td>{{destination}}</td>
+            <td>{{time}}</td>
+            <td>Rs. 20</td>
           </tr>
+         </tbody>
+        </table>
+      </div>
+      <br/>
+      </center>
+      <br/>
+      <hr/>
+      <br/>
+      <br/>
+      <br/>
+      <center>
+      <form method = "post" action = "http://127.0.0.1:5000/checkbalance" id = "form">
+      <input type = "hidden" value = "20" name = "price"/>
+      <input type = 'hidden' name = 'src' value = "{{ source }} " />
+      <input type = 'hidden' name = 'dst' value = "{{ destination }} " />
+      <input type = 'hidden' name = 'timings' value = "{{ time }} " />
+      <div class = "table_div2">
+        <table>
           <tr>
-            <td>Select destination</td>
+            <td>Select quantiry</td>
             <td>
-                <select name = "destination" onfocus = "enlarge(this)" onblur = "normal(this)" style = "widht:150px;height:30px">
+                <select name = "quantity" onfocus = "enlarge(this)" onblur = "normal(this)" style = "widht:150px;height:30px">
                   <option selected = "selected"></option>
-                  <option>Rajajinagar</option>
-                  <option>Penya</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
                 </select>
             </td>
           </tr>
         </table>
       </div>
       <br/>
-      <input type = "submit" value = "Search" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
+      <input type = "submit" value = "Check Balance" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
       </form>
       </center>
       <br/>
       <hr/>
+      <br/>
+      <br/>
       <center>
-      <form method = "post" action = "http://127.0.0.1:5000/enterquantity">
-        
-      
-      </center>
-      <center>
-        
-        <p style = "color: black; font-family: Century Schoolbook L"><strong>Select a train</strong></p>
-        <div class = "details_div">
-        <table>
-          <thead>
-            <tr>
-              <th>Source</th>
-              <th>Destination</th>
-              <th>Platform No.</th>
-              <th>Line</th>
-              <th>Departure Time</th>
-            </tr>
-          </thead>
-          <tbody>
-          	<input type = 'hidden' name = 'src' value = "{{ source }} " />
-          	<input type = 'hidden' name = 'dst' value = "{{ destination }} " />
-           {% for row in rows1 %}
-            <tr>
-               <td>{{row["source"]}}</td>
-               <td>{{row["destination"]}}</td>
-               <td>{{ row["platform"]}}</td>
-               <td>{{row["line"]}}</td>	
-               <td><input type = "radio" name = "timings" value = '{{row["time"]}}' /></td>	
-            </tr>
-           {% endfor %}
-           
-           
-          </tbody>
-        </table>
-        </div>
-        <br/>
-        <input type = "submit" value = "Get train details" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
-        </form>
+      	{% if disp==1 %}
+      		{% if balance==1 %}
+      			<h3 style = "color: red; font-family: Century Schoolbook L" id = "heading">You have sufficient balance </h3>
+      			<input type = "submit" value = "Click to deduct amount" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
+      		{% else %}
+      			<h3 style = "color: red; font-family: Century Schoolbook L" id = "heading">You do not have sufficient balance </h3>
+      			<input type = "submit" value = "Click to recharge" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
+      		{% endif %}
+      	{% endif %}
       </center>
     </div>
   </body>

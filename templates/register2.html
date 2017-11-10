@@ -1,0 +1,57 @@
+<html>
+<head>
+    <title>User Registration</title>
+</head>
+<body style = "background-image: url('images/bg3.jpg')">
+<div class = "top-border" style = "padding: 10px; height: 30px; width: 1500px; background-color: blue; margin-left: -10px; margin-top: -10px">
+      <p class = "links" style = "color: white; font-weight: bold; font-family: Century Schoolbook L; margin-left: 600px; margin-top: 2px;"><a href = "http://127.0.0.1:5000/" style = "color: white; font-weight: bold; font-family: Century Schoolbook L;">Home</a></p>
+    </div>
+<div class="container" style = "position:absolute;margin-top:200px;margin-left:400px;border:2px solid blue;box-shadow:black 3px 3px;background-color:#a3d6ff;color:blue;font-family:Century Schoolbook L;font-size:20px;border-radius:4px;width:500px;height:400px;font-weight:bold">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 well">
+            <form role="form" action="" method="post" name="signupform">
+                <fieldset>
+                    <legend>Sign Up</legend>
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" placeholder="Enter Full Name" required value=" " class="form-control" />
+                        <span class="text-danger">           </span>
+                    </div><br/>
+                    
+                    <div class="form-group">
+                        <label for="name">Email</label>
+                        <input type="text" name="email" placeholder="Email" required value=" " class="form-control" />
+                        <span class="text-danger">           </span>
+                    </div><br/>
+
+                    <div class="form-group">
+                        <label for="name">Password</label>
+                        <input type="password" name="password" placeholder="Password" required class="form-control" />
+                        <span class="text-danger">           </span>
+                    </div><br/>
+
+                    <div class="form-group">
+                        <label for="name">Confirm Password</label>
+                        <input type="password" name="cpassword" placeholder="Confirm Password" required class="form-control" />
+                        <span class="text-danger">           </span>
+                    </div><br/>
+
+                    <div class="form-group">
+                        <input type="submit" name="signup" value="Sign Up" class="btn btn-primary" />
+                    </div>
+                </fieldset>
+            </form>
+            <span class="text-success">                      </span>
+            <span class="text-danger">                       </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 text-center">    
+        Already Registered? <a href="http://127.0.0.1:5000/login">Login Here</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
