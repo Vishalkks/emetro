@@ -27,13 +27,40 @@ def train_table():
 	if request.method == 'POST':
 		src = request.form['source']
 		dst = request.form['destination']
-		dept = request.form['dept']
 		con = sqlite3.connect("Emetro.db")
 		con.row_factory = sqlite3.Row
 		cur = con.cursor()
 		cur.execute("select * from train where source = \'"+src+"\' and destination = \'" +dst+"\'")
 		rows = cur.fetchall()
-		return render_template('book_tickets.html', rows1=rows)
+		return render_template('book_tickets.html', rows1=rows, source = src, destination = dst)
+		
+@app.route('/enterquantity', methods = ['POST', 'GET'])
+def enter_quantity():
+	if request.method == 'POST':
+		src = request.form['src']
+		dst = request.form['dst']
+		timings = request.form['timings']
+		display = 0
+		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,disp = display)
+		
+@app.route('/checkbalance', methods = ['POST', 'GET'])
+def check_balance():
+	if request.method == 'POST':
+		qty = request.form['quantity']
+		price = request.form['price']
+		src = request.form['src']
+		dst = request.form['dst']
+		timings = request.form['timings']
+		total = float(qty)*float(price)
+		balance = 200.0
+		balanceSuf = 0
+		display = 1
+		if total <= balance:
+			balanceSuf = 1
+		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,tot=total,balance = balanceSuf,disp = display)
+		
+		
+	
 
 if __name__ == '__main__':
    app.run(debug = True)
