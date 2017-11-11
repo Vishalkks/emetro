@@ -16,7 +16,7 @@ conn.execute("INSERT INTO train_info (train_id, source, destination, line) VALUE
 conn.execute("INSERT INTO train_info (train_id, source, destination, line) VALUES ('GT005','Putennahalli','Nagasandra','Green')")
 print("Opened database successfully")
 
-
+conn.commit()
 #station_info table
 #purple line mysore road to majestic
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('PT001','P001','Mysore Road',2,1)")
@@ -26,7 +26,7 @@ conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('PT001','P005','Hosahalli',2,5)")
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('PT001','P006','Magadi Road',2,6)")
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('PT001','P007','City Railway Station',2,7)")
-
+conn.commit()
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('PT001','P008','Majestic',4,8)")
 print("Opened database successfully")
 #purple line majestic road to baiyappanahalli
@@ -41,7 +41,7 @@ conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('PT001','P017','Baiyappanahalli',2,17)")
 print("Opened database successfully")
 
-
+conn.commit()
 #Green line puttenhalli to majestic
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('GT001','G001','Puttenahalli',2,1)")
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('GT001','G002','JP Nagar',2,2)")
@@ -53,7 +53,7 @@ conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('GT001','G008','National College',2,8)")
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('GT001','G009','K R Market',2,9)")
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('GT001','G010','Chickpete',2,10)")
-
+conn.commit()
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('GT001','G011','Majestic',4,11)")
 print("Opened database successfully")
 #Green line majestic to nagasandra
@@ -70,7 +70,7 @@ conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('GT001','G022','Jalahalli',2,21)")
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('GT001','G023','Dasarahalli',2,22)")
 conn.execute("INSERT INTO station_info(train_id, station_id, station_name, no_of_platforms, point) VALUES ('GT001','G024','Nagasandra',2,23)")
-
+conn.commit()
 print("Opened database successfully")
 
 #train_schedule	
@@ -107,3 +107,4 @@ conn.execute("INSERT INTO train_schedule(train_id, src_station_id, source,src_pl
 			VALUES ('PT005','P001','Mysore Road', 2,'P017','Baiyappanahalli', 1,'04:40')"\
 			)
 print("Opened database successfully")
+conn.commit()
