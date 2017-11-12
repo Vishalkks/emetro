@@ -121,10 +121,12 @@ def read_qrcode():
 		qr.decode(open('static/qrcodes/'+qrcode,'r'))
 	else:
 		qr.decode_webcam()
-		
-	return qr.data		
+	print("Hello")
+	return "<html><h3> Booking details are : "+qr.data+"</h3></html>"		
 	
-
+@app.route('/scanqr',methods = ['GET'])
+def scan_qrcode():
+	return render_template('qrcode_read.html')
 
 if __name__ == '__main__':
    app.run(debug = True)

@@ -1,0 +1,16 @@
+<html>
+<head><title> QR code scanner </title>
+<link rel="stylesheet" href = "{{ url_for('static',filename='css/qrcode.css') }}"></link>
+</head>
+<body>
+<header>QR code scanner</header>
+
+<form id="form" method = "POST"  action = "http://127.0.0.1:5000/readqr" class="topBefore">
+		
+  <input id="name" type="text" name = "method" placeholder="Method"/>
+  <input id="qrcode" type="file" name = "qrcode" placeholder="Qrcode"/>
+  <input id="submit" type="submit" value="Scan">
+  
+</form>
+</body>
+</html>
