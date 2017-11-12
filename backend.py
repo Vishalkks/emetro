@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
-import pyqrcode
-import qrtools
-import glob
+#import pyqrcode
+#import qrtools
+#import glob
 import sqlite3
 app = Flask(__name__)
 
@@ -23,7 +23,13 @@ def train_details():
 	
 @app.route('/book_tickets')
 def book_tickets():
-	return render_template('book_tickets.html')
+	con = sqlite3.connect("Emetro.db")
+	con.row_factory = sqlite3.Row
+	cur = con.cursor()
+	cur.execute("select * from station_info")
+	rows = cur.fetchall()
+	con.close()
+	return render_template('book_tickets.html',source_list=rows,dst_list=rows)
 	
 @app.route('/traintable', methods = ['POST', 'GET'])
 def train_table():
@@ -33,18 +39,37 @@ def train_table():
 		con = sqlite3.connect("Emetro.db")
 		con.row_factory = sqlite3.Row
 		cur = con.cursor()
-		cur.execute("select * from train where source = \'"+src+"\' and destination = \'" +dst+"\'")
+		cur.execute("select * from train_info TI, train_schedule TS where TI.source = \'"+src+"\' and TI.destination = \'" +dst+"\' and TI.train_id = TS.train_id")
 		rows = cur.fetchall()
+		con.close()
+		if not rows:
+			con = sqlite3.connect("Emetro.db")
+			con.row_factory = sqlite3.Row
+			cur = con.cursor()
+			cur.execute("select * from train_info TI, train_schedule TS where TI.source = \'"+dst+"\' and TI.destination = \'" +src+"\' and TI.train_id = TS.train_id")
+			rows = cur.fetchall()
+			con.close()
+		
 		return render_template('book_tickets.html', rows1=rows, source = src, destination = dst)
 		
 @app.route('/enterquantity', methods = ['POST', 'GET'])
 def enter_quantity():
 	if request.method == 'POST':
-		src = request.form['src']
-		dst = request.form['dst']
+		src = request.form['src'].strip()
+		dst = request.form['dst'].strip()
 		timings = request.form['timings']
+		con = sqlite3.connect("Emetro.db")
+		con.row_factory = sqlite3.Row
+		cur = con.cursor()
+		cur.execute("select * from station_info where station_name = \'"+src+"\'")
+		rows1 = cur.fetchall()
+		con.row_factory = sqlite3.Row
+		cur = con.cursor()
+		cur.execute("select * from station_info where station_name = \'"+dst+"\'")
+		rows2 = cur.fetchall()
+		prc = abs(int(rows1[0][4])-int(rows2[0][4]))*10
 		display = 0
-		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,disp = display)
+		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,disp = display,price=prc)
 		
 @app.route('/checkbalance', methods = ['POST', 'GET'])
 def check_balance():
@@ -62,7 +87,7 @@ def check_balance():
 			balanceSuf = 1
 		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,tot=total,balance = balanceSuf,disp = display)
 
-
+'''
 @app.route('/qrcode',methods = ['POST'])
 def generate_qrcode():
 	#The data is assumed to be a json of the neccesary details such as the time, source, destination.
@@ -92,7 +117,7 @@ def read_qrcode(method,qrcode=0):
 		qr.decode_webcam()
 		
 	return qr.data		
-	
+'''	
 
 if __name__ == '__main__':
    app.run(debug = True)
