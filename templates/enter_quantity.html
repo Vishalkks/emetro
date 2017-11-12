@@ -152,9 +152,9 @@
       <div class = "table_div2">
         <table>
           <tr>
-            <td>Select quantiry</td>
+            <td>Select quantity</td>
             <td>
-                <select name = "quantity" onfocus = "enlarge(this)" onblur = "normal(this)" style = "widht:150px;height:30px">
+                <select id="quant" name = "quantity" onfocus = "enlarge(this)" onblur = "normal(this)" style = "widht:150px;height:30px">
                   <option selected = "selected"></option>
                   <option>1</option>
                   <option>2</option>
@@ -178,7 +178,13 @@
       	{% if disp==1 %}
       		{% if balance==1 %}
       			<h3 style = "color: red; font-family: Century Schoolbook L" id = "heading">You have sufficient balance </h3>
-      			<input type = "submit" value = "Click to deduct amount" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
+      			<form method="POST" action = "http://127.0.0.1:5000/qrcode" id = "form">
+      			Please confirm your booking details once
+      			<input type="text" value="{{ source }}" name="src"/>
+      			<input type="text" value="{{ destination }}" name="dst"/>
+      			<input type="text" value="{{ time }}" name="timings"/>
+      			<input type = "submit" value = "Click to book tickets" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
+      			</form>
       		{% else %}
       			<h3 style = "color: red; font-family: Century Schoolbook L" id = "heading">You do not have sufficient balance </h3>
       			<input type = "submit" value = "Click to recharge" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>

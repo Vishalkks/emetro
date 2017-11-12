@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,url_for
 import pyqrcode
 import qrtools
-import glob
+import glob,os
 import sqlite3
 app = Flask(__name__)
 
@@ -103,13 +103,13 @@ def generate_qrcode():
 		else:
 			latestBooking = 1
 		#fname = '/qrcodes/'+username+'/'+latestBooking+".png"
-		os.chdir('qrcodes')
+		os.chdir('static/qrcodes')
 		fname = str(latestBooking)+".png"
 		with open(fname,'w+') as fstream:
 			qrcode.png(fstream, scale=5)
 		os.chdir("../")
 		
-	return fname
+	return render_template('qrcode.html',result=url_for('static',filename='qrcodes/'+fname))
 	
 @app.route('/readqr',methods = ['POST'])
 def read_qrcode():
@@ -118,7 +118,7 @@ def read_qrcode():
 	qrcode = request.form['qrcode']
 	method = request.form['method']
 	if int(method) == 0:
-		qr.decode(open('qrcodes/'+qrcode,'r'))
+		qr.decode(open('static/qrcodes/'+qrcode,'r'))
 	else:
 		qr.decode_webcam()
 		
