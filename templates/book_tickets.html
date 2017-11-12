@@ -117,8 +117,9 @@
             <td>
                 <select name = "source" onfocus = "enlarge(this)" onblur = "normal(this)" style = "widht:150px;height:30px">
                   <option selected = "selected"></option>
-                  <option>Jayanagar</option>
-                  <option>Lalbagh</option>
+                  {% for row in source_list %}
+                  <option>{{row["station_name"]}}</option>
+                  {% endfor %}
                 </select>
             </td>
           </tr>
@@ -127,8 +128,9 @@
             <td>
                 <select name = "destination" onfocus = "enlarge(this)" onblur = "normal(this)" style = "widht:150px;height:30px">
                   <option selected = "selected"></option>
-                  <option>Rajajinagar</option>
-                  <option>Penya</option>
+                  {% for row in dst_list %}
+                  <option>{{row["station_name"]}}</option>
+                  {% endfor %}
                 </select>
             </td>
           </tr>
@@ -153,8 +155,9 @@
           <thead>
             <tr>
               <th>Source</th>
+              <th>Source Platform No.</th>
               <th>Destination</th>
-              <th>Platform No.</th>
+              <th>Destination Platform No.</th>
               <th>Line</th>
               <th>Departure Time</th>
             </tr>
@@ -164,11 +167,12 @@
           	<input type = 'hidden' name = 'dst' value = "{{ destination }} " />
            {% for row in rows1 %}
             <tr>
-               <td>{{row["source"]}}</td>
-               <td>{{row["destination"]}}</td>
-               <td>{{ row["platform"]}}</td>
-               <td>{{row["line"]}}</td>	
-               <td><input type = "radio" name = "timings"/>{{row["time"]}}</td>	
+               <td><center>{{row["source"]}}</center></td>
+               <td><center>{{row["src_platform"]}}</center></td>
+               <td><center>{{row["destination"]}}</center></td>
+               <td><center>{{row["dest_platform"]}}</center></td>
+               <td><center>{{row["line"]}}</center></td>
+               <td><center><input type = "radio" name = "timings" >{{row["departure_time"]}}</input></center></td>
             </tr>
            {% endfor %}
            
@@ -177,6 +181,10 @@
         </table>
         </div>
         <br/>
+        <br/>
+        <br/>
+        <br/>
+        
         <input type = "submit" value = "Get train details" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
         </form>
       </center>

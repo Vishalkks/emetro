@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import pyqrcode
 import qrtools
-import glob,os
+import glob
 import sqlite3
 app = Flask(__name__)
 
@@ -15,18 +15,7 @@ def login():
 	
 @app.route('/register')
 def register():
-	userId = request.form['user_id']
-	fname = request.form['firstName']
-	lname = request.form['lastName']
-	email = request.form['email']
-	password = request.form['password']
-	hash_password = generate_password_hash(password)
-	if fname and email and password:
-		cursor.execute("INSERT INTO user_details (fname,lname,email,password) VALUES ('"+fname+"','"+lname+"','"+email+"','"+hash_password+"');")
-		conn.commit()
-		return redirect(url_for('login'),code=303)
-	else:
-		return json.dumps({'html':'<span>Enter the required fields</span>'})
+	return render_template('register.html')
 	
 @app.route('/train_details')
 def train_details():
@@ -34,7 +23,13 @@ def train_details():
 	
 @app.route('/book_tickets')
 def book_tickets():
-	return render_template('book_tickets.html')
+	con = sqlite3.connect("Emetro.db")
+	con.row_factory = sqlite3.Row
+	cur = con.cursor()
+	cur.execute("select * from station_info")
+	rows = cur.fetchall()
+	con.close()
+	return render_template('book_tickets.html',source_list=rows,dst_list=rows)
 	
 @app.route('/traintable', methods = ['POST', 'GET'])
 def train_table():
@@ -44,19 +39,37 @@ def train_table():
 		con = sqlite3.connect("Emetro.db")
 		con.row_factory = sqlite3.Row
 		cur = con.cursor()
-		cur.execute("select * from train where source = \'"+src+"\' and destination = \'" +dst+"\'")
+		cur.execute("select * from train_info TI, train_schedule TS where TI.source = \'"+src+"\' and TI.destination = \'" +dst+"\' and TI.train_id = TS.train_id")
 		rows = cur.fetchall()
-		print(rows)
+		con.close()
+		if not rows:
+			con = sqlite3.connect("Emetro.db")
+			con.row_factory = sqlite3.Row
+			cur = con.cursor()
+			cur.execute("select * from train_info TI, train_schedule TS where TI.source = \'"+dst+"\' and TI.destination = \'" +src+"\' and TI.train_id = TS.train_id")
+			rows = cur.fetchall()
+			con.close()
+		
 		return render_template('book_tickets.html', rows1=rows, source = src, destination = dst)
 		
 @app.route('/enterquantity', methods = ['POST', 'GET'])
 def enter_quantity():
 	if request.method == 'POST':
-		src = request.form['src']
-		dst = request.form['dst']
+		src = request.form['src'].strip()
+		dst = request.form['dst'].strip()
 		timings = request.form['timings']
+		con = sqlite3.connect("Emetro.db")
+		con.row_factory = sqlite3.Row
+		cur = con.cursor()
+		cur.execute("select * from station_info where station_name = \'"+src+"\'")
+		rows1 = cur.fetchall()
+		con.row_factory = sqlite3.Row
+		cur = con.cursor()
+		cur.execute("select * from station_info where station_name = \'"+dst+"\'")
+		rows2 = cur.fetchall()
+		prc = abs(int(rows1[0][4])-int(rows2[0][4]))*10
 		display = 0
-		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,disp = display)
+		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,disp = display,price=prc)
 		
 @app.route('/checkbalance', methods = ['POST', 'GET'])
 def check_balance():
@@ -111,6 +124,7 @@ def read_qrcode():
 		
 	return qr.data		
 	
+
 
 if __name__ == '__main__':
    app.run(debug = True)
