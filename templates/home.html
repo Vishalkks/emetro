@@ -2,7 +2,7 @@
   <head>
     <title>Home</title>
     <style type = "text/css">
-      body { background-image: url('images/bg2.jpeg') }
+      body { background-image: "{{ url_for('static', filename='images/bg2.jpeg') }}" }
       .top-border { padding: 10px; height: 30px; width: 1500px; background-color: #330505; margin-left: -10px; margin-top: -10px } 
       .bottom-border { padding: 20px; height: 40px; width: 1500px; background-color: #330505; margin-left: -10px; margin-top: 100px } 
       .links { color: white; font-weight: bold; font-family: Century Schoolbook L; margin-left: 800px; margin-top: 2px;}
@@ -65,10 +65,10 @@
     </div>
     <center><h1>E METRO</h1></center>
     <div class="w3-content w3-section" style="width:500px;height:300px;border:4px solid #330505; border-radius: 5px; box-shadow: black 4px 4px; margin-left: 340px;">
-      <img class="mySlides" src="images/img1.jpg" style="width:100%;height:100%">
-      <img class="mySlides" src="images/img2.png" style="width:100%;height:100%">
-      <img class="mySlides" src="images/img3.jpg" style="width:100%;height:100%">
-      <img class="mySlides" src="images/img4.jpg" style="width:100%;height:100%">
+      <img class="mySlides" src="{{ url_for('static', filename='images/img1.jpg') }}" style="width:100%;height:100%">
+      <img class="mySlides" src="{{ url_for('static', filename='images/img2.png') }}" style="width:100%;height:100%">
+      <img class="mySlides" src="{{ url_for('static', filename='images/img3.jpg') }}" style="width:100%;height:100%">
+      <img class="mySlides" src="{{ url_for('static', filename='images/img4.jpg') }}" style="width:100%;height:100%">
     </div>
     <div class = "alert_marquee">
       <h4 style = "font-family: Century Schoolbook L; color: black">Alerts and Updates</h4>

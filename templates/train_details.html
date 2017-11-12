@@ -2,7 +2,7 @@
   <head>
     <title>Train Details</title>
     <style type = "text/css">
-      body { background-image: url('images/bg1.jpeg') ; font-family: Century Schoolbook L; overflow: scroll}
+      body { background-image: url('{{ url_for('static', filename='images/bg1.jpeg') }}') ; font-family: Century Schoolbook L; overflow: scroll}
       table { background-color: #ADD8E6; border: 2px solid black; border-radius: 5px; border: 1; border-collapse: collapse }
       td { padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; font-weight: bold; font-size: 1em; font-family: Century Schoolbook L; border: 1px solid black;} 
       .links a{ color: white; font-weight: bold; font-family: Century Schoolbook L; text-decoration: none }
@@ -208,7 +208,7 @@
     </div>
     
     <center><h2>ROUTES DETAILS</h2></center>
-    <center><img src = "images/border.png" height = "50px" width = "400px" style = "margin-top: -37px"/></center>
+    <center><img src = "{{ url_for('static', filename='images/border.png') }}" height = "50px" width = "400px" style = "margin-top: -37px"/></center>
     <br/>
     <div class = "marquee" style = "margin-top: 170px">
       <h4 style = "font-family: Century Schoolbook L; color: black">Alerts and Updates</h4>
@@ -226,7 +226,7 @@
       </marquee>
     </div>
     <center><h3 style = "font-family: URW Chancery L; font-size: 20px; color: #533c0e">ROUTE MAP</h3></center><br/>
-    <img src = "images/routes.jpg" width = "40%" height = "70%" style = "margin-left: 400px"/>
+    <img src = "{{ url_for('static', filename='images/routes.jpg') }}" width = "40%" height = "70%" style = "margin-left: 400px"/>
     
     
     <br/>

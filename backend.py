@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
+import pyqrcode
+import qrtools
+import glob
 import sqlite3
-app = Flask(__name__, static_folder ="/home/lenovo/Desktop/7thsem/SE/SEProject/images")
+app = Flask(__name__)
 
 @app.route('/')
 def index():
@@ -58,8 +61,37 @@ def check_balance():
 		if total <= balance:
 			balanceSuf = 1
 		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,tot=total,balance = balanceSuf,disp = display)
+
+
+@app.route('/qrcode',methods = ['POST'])
+def generate_qrcode():
+	#The data is assumed to be a json of the neccesary details such as the time, source, destination.
+	if request.method == 'POST':
+		src = request.form['src']
+		dst = request.form['dst']
+		timings = request.form['timings']
+		qrcode = pyqrcode.create(data)
+		latestBooking = max(map(lambda x : int(x.split('.')[0]), glob.glob('/qrcodes/'+username+'/')))
+		if(latestBooking):
+			latestBooking+=1
+		else:
+			latestBooking = 1
+		fname = '/qrcodes/'+username+'/'+latestBooking+".png"
+		with open(fname,'w+') as fstream:
+			qrcode.png(fstream, scale=5)
 		
+	return fname+".png"
+	
+@app.route('/readqr',methods = ['GET'])
+def read_qrcode(method,qrcode=0):
+	#0 for file, 1 for webcam, qrcode must be a file if method is 0
+	qr = qrtools.QR()
+	if method == 0:
+		qr.decode(qrcode)
+	else:
+		qr.decode_webcam()
 		
+	return qr.data		
 	
 
 if __name__ == '__main__':
