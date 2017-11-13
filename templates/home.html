@@ -2,7 +2,7 @@
   <head>
     <title>Home</title>
     <style type = "text/css">
-      body { background-image: "{{ url_for('static', filename='images/bg2.jpeg') }}" }
+      body { background-image: url({{ url_for('static', filename='images/bg2.jpeg') }}) }
       .top-border { padding: 10px; height: 30px; width: 1500px; background-color: #330505; margin-left: -10px; margin-top: -10px } 
       .bottom-border { padding: 20px; height: 40px; width: 1500px; background-color: #330505; margin-left: -10px; margin-top: 100px } 
       .links { color: white; font-weight: bold; font-family: Century Schoolbook L; margin-left: 800px; margin-top: 2px;}
@@ -50,7 +50,7 @@
   
   <body onload = "slideshow()">
     <div class = "top-border">
-      <p class = "links" ><a href = "http://127.0.0.1:5000/login">Login</a> | <a href = "http://127.0.0.1:5000/register">Register</a> | <a href = "http://127.0.0.1:5000/train_details">Routes Details</a> | <a href = "http://127.0.0.1:5000/book_tickets">Book tickets</a></p>
+      <p class = "links" ><a href = "http://127.0.0.1:5000/login">Login</a> | <a href = "http://127.0.0.1:5000/register">Register</a> | <a href = "http://127.0.0.1:5000/train_details">General Info</a> | <a href = "http://127.0.0.1:5000/book_tickets">Book tickets</a></p>
     </div>
     <div class = "marquee_div">
       <marquee behavior="scroll" direction="left" scrollamount = "10">
@@ -60,7 +60,7 @@
     <div class = "left_div">
       <a href = "http://127.0.0.1:5000/login"><div class = "inner_div" id = "inner_div"><center><p>Login</p></center></div></a><br/>
       <a href = "http://127.0.0.1:5000/register"><div class = "inner_div" id = "inner_div"><center><p>Register</p></center></div></a><br/>
-      <a href = "http://127.0.0.1:5000/train_details"><div class = "inner_div" id = "inner_div"><center><p>Routes Details</p></center></div></a><br/>
+      <a href = "http://127.0.0.1:5000/train_details"><div class = "inner_div" id = "inner_div"><center><p>General Info</p></center></div></a><br/>
       <a href = "http://127.0.0.1:5000/book_tickets"><div class = "inner_div" id = "inner_div"><center><p>Book tickets</p></center></div></a>
     </div>
     <center><h1>E METRO</h1></center>
