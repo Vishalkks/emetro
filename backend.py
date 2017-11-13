@@ -68,6 +68,7 @@ def enter_quantity():
 		cur.execute("select * from station_info where station_name = \'"+dst+"\'")
 		rows2 = cur.fetchall()
 		prc = abs(int(rows1[0][4])-int(rows2[0][4]))*10
+		print(prc)
 		display = 0
 		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,disp = display,price=prc)
 		
@@ -83,6 +84,7 @@ def check_balance():
 		balance = 200.0
 		balanceSuf = 0
 		display = 1
+		print(total)
 		if total <= balance:
 			balanceSuf = 1
 		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,tot=total,balance = balanceSuf,disp = display)
