@@ -17,8 +17,8 @@
       tr:nth-child(even) { background-color: #858585; color: black}
       th { background-color: black; color: white; font-weight: bold; font-family: Century Schoolbook L; border: 1px solid black; }
       td:first-child { color: #000;}
-      .table_div { border: 2px solid black; border-radius: 4px; width: 350px; height: 170px; margin-top: -15px}
-      .table_div2 { border: 2px solid black; border-radius: 4px; width: 450px; height: 70px; margin-top: -15px}
+      .table_div { border: 2px solid black; border-radius: 4px; width: 550px; height: 170px; margin-top: -15px}
+      .table_div2 { border: 2px solid black; border-radius: 4px; width: 350px; height: 70px; margin-top: -15px}
       .details_div { border: 2px solid black; border-radius: 4px; width: 750px; height: 200px; margin-left: 10px}
       tr:hover {
                 background-color: #b8faff;
@@ -145,7 +145,7 @@
       <br/>
       <center>
       <form method = "post" action = "http://127.0.0.1:5000/checkbalance" id = "form">
-      <input type = "hidden" value = "20" name = "price"/>
+      <input type = "hidden" value = "{{price}}" name = "price"/>
       <input type = 'hidden' name = 'src' value = "{{ source }} " />
       <input type = 'hidden' name = 'dst' value = "{{ destination }} " />
       <input type = 'hidden' name = 'timings' value = "{{ time }} " />
@@ -170,10 +170,7 @@
       <input type = "submit" value = "Check Balance" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
       </form>
       </center>
-      <br/>
-      <hr/>
-      <br/>
-      <br/>
+      
       <center>
       	{% if disp==1 %}
       		{% if balance==1 %}
