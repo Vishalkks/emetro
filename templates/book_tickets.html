@@ -172,7 +172,7 @@
                <td><center>{{row["destination"]}}</center></td>
                <td><center>{{row["dest_platform"]}}</center></td>
                <td><center>{{row["line"]}}</center></td>
-               <td><center><input type = "radio" name = "timings" >{{row["departure_time"]}}</input></center></td>
+               <td><center><input type = "radio" value = '{{row["departure_time"]}}' name = "timings" >{{row["departure_time"]}}</input></center></td>
             </tr>
            {% endfor %}
            

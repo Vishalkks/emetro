@@ -176,11 +176,11 @@
       		{% if balance==1 %}
       			<h3 style = "color: red; font-family: Century Schoolbook L" id = "heading">You have sufficient balance </h3>
       			<form method="POST" action = "http://127.0.0.1:5000/qrcode" id = "form">
-      			Please confirm your booking details once
-      			<input type="text" value="{{ source }}" name="src"/>
-      			<input type="text" value="{{ destination }}" name="dst"/>
-      			<input type="text" value="{{ time }}" name="timings"/>
-      			<input type = "submit" value = "Click to book tickets" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/>
+      			Please confirm your booking details once<br/><br/>
+      			<strong>Source :</strong> <input type="text" value="{{ source }}" name="src"/><br/>
+      			<strong>Destination : </strong><input type="text" value="{{ destination }}" name="dst"/><br/>
+      			<strong>Time : </strong><input type="text" value="{{ time }}" name="timings"/><br/><br/>
+      			<input type = "submit" value = "Generate QR Code" onmouseover = "change(this)" onmouseout = "revert(this)" style = "widht:150px;height:30px"/><br/>
       			</form>
       		{% else %}
       			<h3 style = "color: red; font-family: Century Schoolbook L" id = "heading">You do not have sufficient balance </h3>

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request,url_for
-import pyqrcode
-import qrtools
-import glob,os
+#import pyqrcode
+#import qrtools
+#import glob,os
 import sqlite3
 app = Flask(__name__)
 
@@ -89,7 +89,7 @@ def check_balance():
 			balanceSuf = 1
 		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,tot=total,balance = balanceSuf,disp = display)
 
-
+'''
 @app.route('/qrcode',methods = ['POST'])
 def generate_qrcode():
 	#The data is assumed to be a json of the neccesary details such as the time, source, destination.
@@ -129,6 +129,7 @@ def read_qrcode():
 @app.route('/scanqr',methods = ['GET'])
 def scan_qrcode():
 	return render_template('qrcode_read.html')
+'''
 
 if __name__ == '__main__':
    app.run(debug = True)
