@@ -1,237 +1,206 @@
-<html>
-  <head>
-    <title>Train Details</title>
-    <style type = "text/css">
-      body { background-image: url('{{ url_for('static', filename='images/bg1.jpeg') }}') ; font-family: Century Schoolbook L; overflow: scroll}
-      table { background-color: #ADD8E6; border: 2px solid black; border-radius: 5px; border: 1; border-collapse: collapse }
-      td { padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; font-weight: bold; font-size: 1em; font-family: Century Schoolbook L; border: 1px solid black;} 
-      .links a{ color: white; font-weight: bold; font-family: Century Schoolbook L; text-decoration: none }
-      .links a:hover{ color: white; font-weight: bold; font-family: Century Schoolbook L; text-decoration: underline }
-      .top-border { padding: 10px; height: 30px; width: 1500px; background-color: #946905; margin-left: -10px; margin-top: -10px } 
-      h2 { font-family: URW Chancery L; font-size: 40px; color: #533c0e }   
-      
-      tr:nth-child(odd) { background-color: white; color: black }
-      tr:nth-child(even) { background-color: #858585; color: black}
-      th { background-color: black; color: white; font-weight: bold; font-family: Century Schoolbook L; border: 1px solid black; }
-      td:first-child { color: #000;}
-      tr:hover {
-                background-color: #b8faff;
-                -webkit-box-shadow: 0 6px 6px -6px #0E1119;
-	              -moz-box-shadow: 0 6px 6px -6px #0E1119;
-	              box-shadow: 0 6px 6px -6px #0E1119;
-               }
-
-     td:hover {
-                background-color: #212121;
-                color: white;
-                font-weight: bold;
-                
-                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
-                transform: translate3d(6px, -6px, 0);
-                
-                transition-delay: 0s;
-	              transition-duration: 0.4s;
-	              transition-property: all;
-                transition-timing-function: line;
-             }
-             
-       .fare_table { border: 2px solid black; border-radius: 5px; border: 1; border-collapse: collapse; width: 100%; height: 40% }
-       .fare_table td { padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; font-weight: bold; font-size: 1em; font-family: Century Schoolbook L; border: 1px solid black;}
-      .fare_table tr:nth-child(odd) { background-color: white; color: #0000d6 }
-      .fare_table tr:nth-child(even) { background-color: #c6c6fb; color: #0000d6}
-      .fare_table th { background-color: #9191f7; color: white; font-weight: bold; font-family: Century Schoolbook L; border: 1px solid black; }
-      .fare_table td:first-child { color: #0000d6; }
-      .fare_table tr:hover {
-                background-color: #b8faff;
-                -webkit-box-shadow: 0 6px 6px -6px #0E1119;
-	              -moz-box-shadow: 0 6px 6px -6px #0E1119;
-	              box-shadow: 0 6px 6px -6px #0E1119;
-               }
-
-     .fare_table td:hover {
-                background-color: #212121;
-                color: white;
-                font-weight: bold;
-                
-                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
-                transform: translate3d(6px, -6px, 0);
-                
-                transition-delay: 0s;
-	              transition-duration: 0.4s;
-	              transition-property: all;
-                transition-timing-function: line;
-             } 
-             
-       .schedule_table { border: 2px solid black; border-radius: 5px; border: 1; border-collapse: collapse; width: 100%; height: 40% }
-       .schedule_table td { padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; font-weight: bold; font-size: 1em; font-family: Century Schoolbook L; border: 1px solid black;}
-      .schedule_table tr:nth-child(odd) { background-color: white; color: #0000d6 }
-      .schedule_table tr:nth-child(even) { background-color: #c6c6fb; color: #0000d6}
-      .schedule_table th { background-color: #9191f7; color: white; font-weight: bold; font-family: Century Schoolbook L; border: 1px solid black; }
-      .schedule_table td:first-child { color: #0000d6; }
-      .schedule_table tr:hover {
-                background-color: #b8faff;
-                -webkit-box-shadow: 0 6px 6px -6px #0E1119;
-	              -moz-box-shadow: 0 6px 6px -6px #0E1119;
-	              box-shadow: 0 6px 6px -6px #0E1119;
-               }
-
-     .schedule_table td:hover {
-                background-color: #212121;
-                color: white;
-                font-weight: bold;
-                
-                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
-                transform: translate3d(6px, -6px, 0);
-                
-                transition-delay: 0s;
-	              transition-duration: 0.4s;
-	              transition-property: all;
-                transition-timing-function: line;
-             } 
-             
-    .express_fare_div, .ordinary_fare_div { border: 2px solid #0000d6; border-radius: 5px; width: 450px; height: 250px; position: absolute; margin-top: 30px; background-color: blue}
-    .schedule { border: 2px solid #0000d6; border-radius: 5px; width: 450px; height: 250px; position: absolute; margin-top: 40px; background-color: blue}   
-             
-    .fare_div { position: absolute; margin-left: 150px; }
-    .schedule_div { position: absolute; margin-left: 700px; margin-top: 0px; }
-    .express { border: 4px solid #6b0000; border-radius: 5px; width: 100px; height: 100px; font-family: URW Chancery L; font-weight: bold; background-color: white }
-    .ordinary { border: 4px solid #6b0000; border-radius: 5px; width: 100px; height: 100px; position: absolute; margin-left: 180px; margin-top: -110px; font-family: URW Chancery L; font-weight: bold; background-color: white } 
-    .express:hover, .ordinary:hover 
-              {
-                background-color: #b8faff;
-                color: black;
-                font-weight: bold;
-                
-                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
-                transform: translate3d(6px, -6px, 0);
-                
-                transition-delay: 0s;
-	              transition-duration: 0.4s;
-	              transition-property: all;
-                transition-timing-function: line;
-              }
-     .marquee { border: 4px solid #6b0000; border-radius: 5px; margin-left: 10px; margin-top: -50px; width: 300px; height: 300px; box-shadow: black 4px 4px; background-color: white; color: #533c0e; font-weight: bold; font-family: URW Chancery L; position: absolute }
-     
-     .route_map { border: 4px solid black; border-radius: 5px; box-shadow: black 4px 4px; width: 250px; height: 200px; margin-left: 900px; margin-top: -300px;}
-     
-.route_map:hover{
-                background-color: #b8faff;
-                color: black;
-                font-weight: bold;
-                
-                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
-                transform: translate3d(6px, -6px, 0);
-                
-                transition-delay: 0s;
-	              transition-duration: 0.4s;
-	              transition-property: all;
-                transition-timing-function: line;
-              }
-    </style>
-    
-    <script type = "text/javascript">
-    
-      function ordinary()
-      {
-        var ord = document.getElementById("ordinary");
-        ord.style.display = 'block';
-        var ex = document.getElementById("express");
-        ex.style.display = 'none';
-        var content = document.getElementById("content");
-        content.innerHTML = "Ordinary type fare details";
-      }
-      
-      function express()
-      {
-        var ord = document.getElementById("ordinary");
-        ord.style.display = 'none';
-        var ex = document.getElementById("express");
-        ex.style.display = 'block';
-        var content = document.getElementById("content");
-        content.innerHTML = "Express type fare details";
-      }
-      
-      function display_details(name)
-      {
-        //alert(name)
-        var d = document.getElementById('schedule');
-        d.style.display = 'block';
-        name.style.display = 'block';
-      }
-      
-      function hide_details(name)
-      {
-        //var d = document.getElementById(name);
-        name.style.display = 'none';
-      }
-      
-      function enlarge(x)
-      {
-        x.style.border = '2px solid red';
-        x.style.width = '150px';
-        x.style.height = '50px';
-        x.style.borderRadius = '4px';
-      }
-      
-      function normal(x)
-      {
-        x.style.border = '';
-        x.style.width = '150px';
-        x.style.height = '30px';
-        x.style.borderRadius = '';
-      }
-      
-      function change(x)
-      {
-        x.style.border = '2px solid black';
-        x.style.width = '150px';
-        x.style.height = '50px';
-        x.style.borderRadius = '4px';
-        x.style.backgroundColor = '#8aceff';
-      }
-      
-      function revert(x)
-      {
-        x.style.border = '';
-        x.style.width = '150px';
-        x.style.height = '30px';
-        x.style.borderRadius = '';
-        x.style.backgroundColor = '';
-      }
-      
-    </script>
-  </head>
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Train Details</title>
   
-  <body>
-    <div class = "top-border">
-      <p class = "links" ><a href = "http://127.0.0.1:5000/">Home</a></p>
+  
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/route_details.css') }}">
+      <style type = "text/css">
+      .header
+      {
+      	background-image: url({{ url_for('static', filename='images/s1_ph_01.jpg') }});
+      }
+      </style>
+
+  
+</head>
+
+<body>
+  <html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Train Details</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Libre+Baskerville' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  
+  <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
+</head>
+<body>
+  <!--Header-->
+  <a name="home"></a>
+  <div class="header">
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header_menu" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" class="header_menu" id="header_menu">
+          <ul class="nav navbar-nav navbar pull-right">
+            <li><a href=" http://127.0.0.1:5000/" class="smoothScroll" style="color:black">Home</a></li>
+<!--             <li><a href="#about" class="smoothScroll">About</a></li> -->
+            <li><a href=" http://127.0.0.1:5000/login" class="smoothScroll" style="color:black">Login</a></li>
+            <li><a href=" http://127.0.0.1:5000/register" class="smoothScroll" style="color:black">Register</a></li>
+            <li><a href=" http://127.0.0.1:5000/book_tickets" class="smoothScroll" style="color:black">Book Tickets</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
     </div>
-    
-    <center><h2>ROUTES DETAILS</h2></center>
-    <center><img src = "{{ url_for('static', filename='images/border.png') }}" height = "50px" width = "400px" style = "margin-top: -37px"/></center>
-    <br/>
-    <div class = "marquee" style = "margin-top: 170px">
-      <h4 style = "font-family: Century Schoolbook L; color: black">Alerts and Updates</h4>
-      <marquee behavior="scroll" direction="up" scrollamount = "5">
-      <p>As per Ministry of Railways, 0.5% discount in base fare of season tickets shall be granted in case of digital payment w.e.f. 01-      Jan-2017.</p>
-      <hr/>
-      <p>Aadhaar verification for getting concessional tickets for Senior Citizens shall be on Voluntary basis from 1st January 2017 and Mandatory from 1st April 2017.</p>
-      <hr/>
-      <p>All India Security Help line No. 182: This facility enables the Railway passengers to avail immediate security related assistance from any place including Trains and Railway premises.</p>
-      <hr/>
-      <p>In case of partial cancellation, diversion or short termination of trains, E-Ticket passengers are required to file TDR as per refund rules to claim the refund.
-      </p><hr/>
-      <p>SMS delivery is subject to effective transmission from your mobile service operator and mobile carrier network availability. In case, you have not received Booking SMS, Please check “Booked Ticket History” before proceeding for new ticket booking.</p>
-      <hr/>
-      </marquee>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <h4 class="note" style="color:white">E METRO</h4>
+          <h1 class="headliner" style="color:pink">Station and Route Details</h1>
+          
+        </div>
+      </div>
     </div>
-    <center><h3 style = "font-family: URW Chancery L; font-size: 20px; color: #533c0e">ROUTE MAP</h3></center><br/>
-    <img src = "{{ url_for('static', filename='images/routes.jpg') }}" width = "40%" height = "70%" style = "margin-left: 400px"/>
-    
-    
-    <br/>
-    
-    <br/>
-   
-  </body>
+  </div>
+  <!--/Header-->
+  
+  <!--About-->
+<a name="about"></a>
+  <div class="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h2>About</h2>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h3>&nbsp;</h3>
+          <p class="text">
+            India is one of the countries that try to invest the most for transportation systems. There is an increasing disparity between rapid economic growth of industries in IT cities with each over one million people and transportation systems which largely remains undeveloped. In order to address the problem, the Bangalore metro project in South India was launched in 2009 to ease the traffic congestion due to Bangalore's rapid economic growth of over seven million people.
+          </p>
+          <p class="text">
+            The product is an extension of metro application.In the metro application there is no provision to book or cancel tickets,people have to stand in queue in order to do so.This feature is
+implemented in our application.We also going to implement an e-wallet so that the amount gets deducted on its own while booking and gets automatically refunded during cancellation. The application also displays the route map and active and inactive routes.
+          </p>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h3>2015</h3>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+              <span class="sr-only">10% Reduction</span>
+            </div>
+          </div>
+
+          <h3>2016</h3>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+              <span class="sr-only">15% Reduction</span>
+            </div>
+          </div>
+
+          <h3>2017</h3>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+              <span class="sr-only">18% Reduction</span>
+            </div>
+          </div><br/>
+          <p class="text-center"><strong>Percentage reduction in Bangalore traffic</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/About-->
+  
+  <!--Portfolio-->
+  <div class="portfolio">
+    <a name="portfolio"></a>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="text-center">Train Details</h2>
+         
+        </div>
+        <!--Portfolio work-->
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <div class="grid">
+            <figure class="effect-ruby">
+              <img src="{{ url_for('static', filename='images/routes.jpg') }}"/>
+              <a href="{{ url_for('static', filename='images/routes.jpg') }}" target="_blank">
+                <figcaption>
+                  <h2>Route Info</h2>
+                  <p>E Metro Route Map</p>
+                </figcaption>
+              </a>    
+            </figure>
+          </div>
+        </div>
+        <!--Portfolio work-->
+
+        <!--Portfolio work-->
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <div class="grid">
+            <figure class="effect-ruby">
+              <img src="{{ url_for('static', filename='images/station1.png') }}" height = "300px" width = "100%"/>
+              <a href="{{ url_for('static', filename='images/station_details.pdf') }}" target="_blank">
+                <figcaption>
+                  <h2>Station Info</h2>
+                  <p>E Metro Station Details</p>
+                </figcaption>
+              </a>  
+            </figure>
+          </div>
+        </div>
+        <!--Portfolio work-->
+
+        
+        <!--Portfolio work-->
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <div class="grid" >
+            <figure class="effect-ruby">
+              <img src="{{ url_for('static', filename='images/nammametro.png') }}" height = "300px" width = "100%"/>
+              <a href="http://english.bmrc.co.in/" target="_blank">
+                <figcaption>
+                  <h2>Namma Metro</h2>
+                  <p>The Official Website</p>
+                </figcaption>
+              </a>  
+            </figure>
+          </div>
+        </div>
+        <!--Portfolio work-->
+        
+ <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+  <!--Footer-->
+  <div class="footer">
+    <a name="footer"></a>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <p class="social">
+            <a href="https://www.facebook.com" target="_blank" class="animate-me social-icon facebook"></a>
+            <a href="https://www.linkedin.com" target="_blank" class="animate-me social-icon linkedin"></a>
+            <a href="https://github.com" target="_blank" class="animate-me social-icon github"></a>
+          </p>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <p class="text-right">© 2017 E Metro. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/Footer-->
+</body>
+</html>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+
+    <script  src="{{ url_for('static', filename='js/train_details.js') }}"></script>
+
+</body>
 </html>
