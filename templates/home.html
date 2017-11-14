@@ -50,13 +50,39 @@
   
   <body onload = "slideshow()">
     <div class = "top-border">
-      <p class = "links" ><a href = "http://127.0.0.1:5000/login">Login</a> | <a href = "http://127.0.0.1:5000/register">Register</a> | <a href = "http://127.0.0.1:5000/train_details">General Info</a> | <a href = "http://127.0.0.1:5000/book_tickets">Book tickets</a></p>
+      <p class = "links" ><a href = "http://127.0.0.1:5000/login">Login</a> | <a href = "http://127.0.0.1:5000/register">Register</a> | <a href = "http://127.0.0.1:5000/train_details">General Info</a> | <a href = "http://127.0.0.1:5000/book_tickets">Book tickets</a> {% if loggedIn %} | <a href = "http://127.0.0.1:5000/logout">Logout</a> {% endif %}</p>
     </div>
     <div class = "marquee_div">
       <marquee behavior="scroll" direction="left" scrollamount = "10">
       <p>Welcome to railway ticket reservation website. For details aboute train click on 'Route details'. You can book tickets by clicking 'Book tickets'. Register and Login to book the tickets</p>
     </marquee>
     </div>
+    {% if loggedIn %}
+    <br/>
+    <div class = "top-border" style = "margin-top:-20px">
+      <p class = "links" style="margin-left : 500px">Welcome {{user_name}}!</p>
+    </div>
+    <br/>
+    <br/>
+    {% endif %}
+    {% if loggedOut %}
+    	{% if init %}
+			<br/>
+			<div class = "top-border" style = "margin-top:-20px">
+			  <p class = "links" style="margin-left : 500px">Successfully Logged out!</p>
+			</div>
+			<br/>
+			<br/>
+		{% endif %}
+    {% endif %}
+    {% if logInToBook %}
+    <br/>
+    <div class = "top-border" style = "margin-top:-20px">
+      <p class = "links" style="margin-left : 500px">Please Log In to Book Tickets!</p>
+    </div>
+    <br/>
+    <br/>
+    {% endif %}
     <div class = "left_div">
       <a href = "http://127.0.0.1:5000/login"><div class = "inner_div" id = "inner_div"><center><p>Login</p></center></div></a><br/>
       <a href = "http://127.0.0.1:5000/register"><div class = "inner_div" id = "inner_div"><center><p>Register</p></center></div></a><br/>
