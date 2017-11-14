@@ -36,8 +36,21 @@ def login():
 def handle_session():
 	global session
 	if request.method == 'POST':
-		session['username'] = request.form['user']
-		return redirect(url_for('index'))
+		user = request.form['user']
+		pwd = request.form['pass']
+		con = sqlite3.connect("Emetro.db")
+		con.row_factory = sqlite3.Row
+		cur = con.cursor()
+		cur.execute('select * from user_details where user_id = \''+user+'\'')
+		rows = cur.fetchall()
+		if rows:
+			if rows[0][4] == pwd:
+				session['username'] = request.form['user']
+				return redirect(url_for('index'))
+			else:
+				return render_template('login.html',incorrect = True)
+		else:
+				return render_template('login.html',incorrect = True)
 
 @app.route('/logout')
 def logout():
@@ -170,6 +183,27 @@ def read_qrcode():
 @app.route('/scanqr',methods = ['GET'])
 def scan_qrcode():
 	return render_template('qrcode_read.html')
+
+@app.route('/enter_user_details', methods=['POST'])
+def enter_user_details():
+	if request.method == 'POST':
+		uid = request.form['user_id']
+		pwd=request.form['password']
+		fn= request.form['firstName']
+		ln = request.form['lastName']
+		mail = request.form['email']
+		street = request.form['street']
+		city = request.form['pincode']
+		mb = request.form['mobileNo']
+		pincode = request.form['pincode']
+		dob=request.form['dob']
+		con = sqlite3.connect("Emetro.db")
+		con.row_factory = sqlite3.Row
+		con.execute("INSERT INTO user_details VALUES(\'"+uid+"\',\'"+fn+"\',\'"+ln+"\',\
+		\'"+mail+"\',\'"+pwd+"\',\'"+dob+"\',\'"+street+"\',\'"+city+"\',\'"+pincode+"\',\'"+mb+"\',0)")
+		con.commit()
+		return render_template('home.html',register = True)
+
 
 
 if __name__ == '__main__':
