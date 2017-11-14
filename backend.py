@@ -1,18 +1,54 @@
-from flask import Flask, render_template, request,url_for
+from flask import Flask, render_template, request,url_for, redirect
 import pyqrcode
 import qrtools
 import glob,os
 import sqlite3
 app = Flask(__name__)
+session = {}
+session['username'] = ''
+logged_in = False
+usrname = ''
+logged_out = False
+initial = False
 
 @app.route('/')
 def index():
-   return render_template('home.html')
+	global logged_in
+	global logged_out
+	global session
+	global initial
+	if session['username']:
+		logged_in = True
+		usrname = session['username']
+		logged_out = False
+		return render_template('home.html',loggedIn = logged_in,user_name = usrname,loggedOut = logged_out)
+	else:
+		usrname = session['username']
+		temp = initial
+		initial = True
+		return render_template('home.html',loggedIn = logged_in,user_name = usrname,loggedOut = logged_out,init = temp)
    
 @app.route('/login')
 def login():
 	return render_template('login.html')
 	
+@app.route('/handle_session', methods = ['GET', 'POST'])
+def handle_session():
+	global session
+	if request.method == 'POST':
+		session['username'] = request.form['user']
+		return redirect(url_for('index'))
+
+@app.route('/logout')
+def logout():
+	global logged_in
+	global logged_out
+	global session
+	session['username'] = ''
+	logged_in = False
+	logged_out = True
+	return redirect(url_for('index'))
+   
 @app.route('/register')
 def register():
 	return render_template('register.html')
@@ -23,13 +59,18 @@ def train_details():
 	
 @app.route('/book_tickets')
 def book_tickets():
-	con = sqlite3.connect("Emetro.db")
-	con.row_factory = sqlite3.Row
-	cur = con.cursor()
-	cur.execute("select * from station_info")
-	rows = cur.fetchall()
-	con.close()
-	return render_template('book_tickets.html',source_list=rows,dst_list=rows)
+	if logged_in:
+		con = sqlite3.connect("Emetro.db")
+		con.row_factory = sqlite3.Row
+		cur = con.cursor()
+		cur.execute("select * from station_info")
+		rows = cur.fetchall()
+		con.close()
+		return render_template('book_tickets.html',source_list=rows,dst_list=rows)
+	else:
+		log_in_to_book_tickets = True
+		return render_template('home.html',logInToBook = log_in_to_book_tickets)
+		
 	
 @app.route('/traintable', methods = ['POST', 'GET'])
 def train_table():
