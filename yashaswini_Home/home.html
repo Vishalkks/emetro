@@ -4,15 +4,52 @@
     <meta charset="utf-8">
     <title>namma Metro</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="text/png" href="images/logo.png">
-    <link id="callCss" rel="stylesheet" href="images/bootstrap.min.css" media="screen"/>
-    <link href="images/base.css" rel="stylesheet" media="screen"/>
+    <link rel="icon" type="text/png" href="{{ url_for('static', filename='images/home_logo.png') }}">
+    <link id="callCss" rel="stylesheet" href="{{ url_for('static', filename='css/home_bootstrap.min.css') }}" media="screen"/>
+    <link href="{{ url_for('static', filename='css/home_base.css') }}" rel="stylesheet" media="screen"/>
 <!-- Bootstrap style responsive -->	
-	<link href="images/bootstrap-responsive.min.css" rel="stylesheet"/>
-	<link href="images/font-awesome.css" rel="stylesheet" type="text/css">
-	<script src="images/jquery.min.js" type="text/javascript"></script>
+	<link href="{{ url_for('static', filename='css/home_bootstrap-responsive.min.css') }}" rel="stylesheet"/>
+	<link href="{{ url_for('static', filename='css/home_font-awesome.css') }}" rel="stylesheet" type="text/css">
+	<script src="{{ url_for('static', filename='js/home_jquery.min.js') }}" type="text/javascript"></script>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+  
     <style type="text/css">
+    .fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+    opacity: 0.7;
+}
+
+/* Set a specific color for each brand */
+
+/* Facebook */
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+
+/* Twitter */
+.fa-twitter {
+    background: #55ACEE;
+    color: white;
+}
 	 li { cursor: pointer; cursor: hand; }
+	 .marquee_div { padding: 5px; height: 25px; width: 1500px; background-color: white; margin-left: -10px; margin-top: 0px; color: blue; font-weight: bold; font-family: Century Schoolbook L;  font-size: 15px}
 	 
   .carousel-inner > .item > img,
   .carousel-inner > .item > a > img {
@@ -30,9 +67,9 @@
 	 background-color:gray;
 	 color:white;
   }
-   .alert_marquee { border: 4px solid #330505; border-radius: 5px; margin-left: 940px; margin-top: -300px; width: 300px; height: 300px;
+   .alert_marquee { border: 4px solid #330505; border-radius: 5px; margin-left: 860px; margin-top: -330px; width: 460px; height: 320px;
 	  box-shadow: black 4px 4px; background-color: white; color: #533c0e; font-weight: bold; 
-	  font-family: URW Chancery L }
+	  font-family: URW Chancery L; font-size:18px}
 	
 	.footer{
 	right:40%;
@@ -40,28 +77,46 @@
 	position:relative;
 	background-color:#800080;
 	}
+	.header-text {
+    position: absolute;
+    top: 20%;
+    left: 1.8%;
+    right: auto;
+    width: 96.66666666666666%;
+    color: #fff;
+    font-family: URW Chancery L;
+}
+
+.header-text h2 {
+    font-size: 40px;
+}
+
+.header-text h2 span {
+    background-color: #2980b9;
+	padding: 10px;
+}
+
+.header-text h3 span {
+	background-color: #000;
+	padding: 15px;
+}
   </style>
  
   </head>
 <body>
 <div id="header">
-<div class="container">
-<div id="welcomeLine" class="row">
-	<div class="span6">Welcome!<strong id="user">{{user}} </strong></div>
-</div>
+
 <!-- Navbar ================================================== -->
-<div id="logoArea" class="navbar">
-<div class="navbar-inner">
+<div id="logoArea" class="navbar" width = "150%" height = "150%" >
+<div class="navbar-inner" width = "100%" height = "100%">
     <a class="brand" href="http://127.0.0.1:5000/"><img src="images/logo.bmp" alt="Bootsshop"/></a>
     <ul id="topMenu" class="nav pull-right">
 	 <li class=""><a href="http://127.0.0.1:5000/">About Us</a></li>
 	 <li class=""><a href="http://127.0.0.1:5000/train_details">RouteInfo</a></li>
 	 <li class=""><a href="http://127.0.0.1:5000/book_tickets">BookTicket</a></li>
 	 <li class=""><a href="http://127.0.0.1:5000/register">Register</a></li>
-	 <li class=""><a href="">Contact</a></li>
-	 
 	 <button class="btn btn-large btn-success"><a href="http://127.0.0.1:5000/login" style="padding-right:0">
-	 {{state}}</a></button>
+	 Login</a></button>
 
 		
 	</div>
@@ -69,49 +124,112 @@
     </ul>
   </div>
 </div>
-</div>
+
 <!-- Header End====================================================================== -->
 <!-- Indicators -->
-<div class="container">
-  <br>
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+<div class = "marquee_div">
+      <marquee behavior="scroll" direction="left" scrollamount = "10">
+      <p>Welcome to railway ticket reservation website. For details aboute train click on 'Route details'. You can book tickets by clicking 'Book tickets'. Register and Login to book the tickets</p>
+    </marquee>
+    </div>
+  
+  <div id="myCarousel" class="carousel slide" data-ride="carousel" height="300px">
+    <!-- Indicators -->
+    
 
     <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-
+    <div class="carousel-inner" height="300px">
       <div class="item active">
-        <img src="images/d1.jpg" alt="Chania" width="460" height="345">
+        <img src="{{ url_for('static', filename='images/home_d1.jpg') }}" alt="Los Angeles" style="width:100%;height:500px">
+         <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                            	<span>Welcome to <strong>E METRO</strong></span>
+                            </h2>
+                            <br>
+                            <h3>
+                            	<span>Ticket Booking Site</span>
+                            </h3>
+                            <br>
+                        </div>
+                    </div>
       </div>
 
       <div class="item">
-        <img src="images/d6.jpg" alt="Chania" width="460" height="345">
+        <img src="{{ url_for('static', filename='images/home_d6.jpg') }}" alt="Chicago" style="width:100%;height:500px">
+        <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                            	<span><strong>Namma Metro, also known as Bengaluru Metro is a metro system serving</strong></span>
+                            </h2>
+                            	<br/>
+                            <h2>
+                            	<span><strong>the city of Bengaluru, India."</strong></span>
+                            </h2>
+                        </div>
+                    </div>
       </div>
     
       <div class="item">
-        <img src="images/d2.jpg" alt="Flower" width="460" height="345">
+        <img src="{{ url_for('static', filename='images/home_d2.jpg') }}" alt="New york" style="width:100%;height:500px">
+        <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                            	<span><strong>The second longest operational metro network in India after the </strong></span>
+                            </h2>
+                            	<br/>
+                            <h2>
+                            	<span><strong>Delhi Metro</strong></span>
+                            </h2>
+                        </div>
+                    </div>
       </div>
-	  
-	  <div class="item">
-        <img src="images/d3.jpg" alt="Flower" width="460" height="345">
-      </div>
-	  
-	  <div class="item">
-        <img src="images/d4.jpg" alt="Flower" width="460" height="345">
-      </div>
-
+      
       <div class="item">
-        <img src="images/d5.jpg" alt="Flower" width="460" height="345">
+        <img src="{{ url_for('static', filename='images/home_d3.jpg') }}" alt="New york" style="width:100%;height:500px">
+        <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                            	<span><strong>The Bangalore Metro Rail Corporation Ltd (BMRCL), a joint venture of </strong></span>
+                            </h2>
+                            	<br/>
+                            <h2>
+                            	<span><strong>The Government of India and the Government of Karnataka, built and </strong></span>
+                            </h2>
+                            	<br/>
+                            <h2>
+                            	<span><strong>operates the Namma Metro</strong></span>
+                            </h2>
+                        </div>
+                    </div>
       </div>
-  
+      
+      <div class="item">
+        <img src="{{ url_for('static', filename='images/home_d4.jpg') }}" alt="New york" style="width:100%;height:500px">
+        <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                            	<span><strong>Services operate daily between 05:00 and 23:00 running with a headway </strong></span>
+                            </h2>
+                            	<br/>
+                            <h2>
+                            	<span><strong>varying between 4–20 minutes</strong></span>
+                            </h2>
+                        </div>
+                    </div>
+      </div>
     </div>
 
     <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      &lsaquo;
+    <!--<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
     </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      &rsaquo;
-    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>-->
   </div>
 </div>
 
@@ -145,17 +263,21 @@ The commercial operations on Reach-1 (MG Road to Baiyappanahalli station) have o
       </marquee>
     </div>
     
-      <div class="footer">
-    <p class="pull-right">&copy; Copyright 2017 by BMRCL, Powered by <a href="">::karnataka gov::</a></p>
-	</div>
+    <br/>
+      
+		<div style = "padding:2px;background-color:black;width:1330px;margin-top:-7px;height:50px">
+          <p class="text-center" style="color:white;font-weight:bold">© 2017 E Metro. All rights reserved.</p>
+       </div>
+    
     
 	
 </p>
 <!-- Placed at the end of the document so the pages load faster ============================================= -->
-	<script src="images/jquery.js" type="text/javascript"></script>
-	<script src="images/bootstrap.min.js" type="text/javascript"></script>
-	<script src="images/prettify.js" type="text/javascript"></script>
-	<script src="images/bootshop.js" type="text/javascript"></script>
-    <script src="images/jquery.lightbox-0.5.js" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='js/home_jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='js/home_bootstrap.min.js') }}" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='js/home_prettify.js') }}" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='js/home_bootshop.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/home_jquery.lightbox-0.5.js') }}" type="text/javascript"></script>
+     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 </body>
 </html>

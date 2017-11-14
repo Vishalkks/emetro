@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <title>Home</title>
+    <style type = "text/css">
+      body { background-image: url({{ url_for('static', filename='images/bg2.jpeg') }}) }
+      .top-border { padding: 10px; height: 30px; width: 1500px; background-color: #330505; margin-left: -10px; margin-top: -10px } 
+      .bottom-border { padding: 20px; height: 40px; width: 1500px; background-color: #330505; margin-left: -10px; margin-top: 100px } 
+      .links { color: white; font-weight: bold; font-family: Century Schoolbook L; margin-left: 800px; margin-top: 2px;}
+      .links a{ color: white; font-weight: bold; font-family: Century Schoolbook L; text-decoration: none }
+      .links a:hover{ color: white; font-weight: bold; font-family: Century Schoolbook L; text-decoration: underline }
+      .marquee_div { padding: 5px; height: 30px; width: 1500px; background-color: white; margin-left: -10px; margin-top: 0px; color: blue; font-weight: bold; font-family: Century Schoolbook L; }
+      .left_div { margin-top: 50px; margin-left: 50px; }
+      .left_div a { text-decoration: none } 
+      .inner_div { height: 60px; width: 160px; border: 2px solid black; background-color: #330505; font-weight: bold; font-family: Century Schoolbook L; color: white; border-radius: 4px;}
+      .inner_div:hover {
+                background-color: white;
+                color: #330505;
+                font-weight: bold;
+                
+                box-shadow: #9e9e9e -1px 1px, #9e9e9e -2px 2px, #9e9e9e -3px 3px, #9e9e9e -4px 4px, #9e9e9e -5px 5px, #9e9e9e -6px 6px;
+                transform: translate3d(6px, -6px, 0);
+                
+                transition-delay: 0s;
+	              transition-duration: 0.4s;
+	              transition-property: all;
+                transition-timing-function: line;
+             }
+      h1 { font-family: URW Chancery L; font-size: 40px; color: #330505; margin-top: -300px; }
+      .alert_marquee { border: 4px solid #330505; border-radius: 5px; margin-left: 940px; margin-top: -300px; width: 300px; height: 300px; box-shadow: black 4px 4px; background-color: white; color: #533c0e; font-weight: bold; font-family: URW Chancery L }
+      
+    </style>
+    <script>
+      var myIndex = 0;
+
+      function slideshow() 
+      {
+          var i;
+          var x = document.getElementsByClassName("mySlides");
+          for (i = 0; i < x.length; i++) {
+             x[i].style.display = "none";  
+          }
+          myIndex++;
+          if (myIndex > x.length) {myIndex = 1}    
+          x[myIndex-1].style.display = "block";  
+          setTimeout(slideshow, 2000);
+      }
+   </script>
+
+  </head>
+  
+  <body onload = "slideshow()">
+    <div class = "top-border">
+      <p class = "links" ><a href = "http://127.0.0.1:5000/login">Login</a> | <a href = "http://127.0.0.1:5000/register">Register</a> | <a href = "http://127.0.0.1:5000/train_details">General Info</a> | <a href = "http://127.0.0.1:5000/book_tickets">Book tickets</a> {% if loggedIn %} | <a href = "http://127.0.0.1:5000/logout">Logout</a> {% endif %}</p>
+    </div>
+    <div class = "marquee_div">
+      <marquee behavior="scroll" direction="left" scrollamount = "10">
+      <p>Welcome to railway ticket reservation website. For details aboute train click on 'Route details'. You can book tickets by clicking 'Book tickets'. Register and Login to book the tickets</p>
+    </marquee>
+    </div>
+    {% if loggedIn %}
+    <br/>
+    <div class = "top-border" style = "margin-top:-20px">
+      <p class = "links" style="margin-left : 500px">Welcome {{user_name}}!</p>
+    </div>
+    <br/>
+    <br/>
+    {% endif %}
+    {% if loggedOut %}
+    	{% if init %}
+			<br/>
+			<div class = "top-border" style = "margin-top:-20px">
+			  <p class = "links" style="margin-left : 500px">Successfully Logged out!</p>
+			</div>
+			<br/>
+			<br/>
+		{% endif %}
+    {% endif %}
+    {% if logInToBook %}
+    <br/>
+    <div class = "top-border" style = "margin-top:-20px">
+      <p class = "links" style="margin-left : 500px">Please Log In to Book Tickets!</p>
+    </div>
+    <br/>
+    <br/>
+    {% endif %}
+    {% if register %}
+    <br/>
+    <div class = "top-border" style = "margin-top:-20px">
+      <p class = "links" style="margin-left : 500px">Registeration Successful!</p>
+    </div>
+    <br/>
+    <br/>
+    {% endif %}
+    <div class = "left_div">
+      <a href = "http://127.0.0.1:5000/login"><div class = "inner_div" id = "inner_div"><center><p>Login</p></center></div></a><br/>
+      <a href = "http://127.0.0.1:5000/register"><div class = "inner_div" id = "inner_div"><center><p>Register</p></center></div></a><br/>
+      <a href = "http://127.0.0.1:5000/train_details"><div class = "inner_div" id = "inner_div"><center><p>General Info</p></center></div></a><br/>
+      <a href = "http://127.0.0.1:5000/book_tickets"><div class = "inner_div" id = "inner_div"><center><p>Book tickets</p></center></div></a>
+    </div>
+    <center><h1>E METRO</h1></center>
+    <div class="w3-content w3-section" style="width:500px;height:300px;border:4px solid #330505; border-radius: 5px; box-shadow: black 4px 4px; margin-left: 340px;">
+      <img class="mySlides" src="{{ url_for('static', filename='images/img1.jpg') }}" style="width:100%;height:100%">
+      <img class="mySlides" src="{{ url_for('static', filename='images/img2.png') }}" style="width:100%;height:100%">
+      <img class="mySlides" src="{{ url_for('static', filename='images/img3.jpg') }}" style="width:100%;height:100%">
+      <img class="mySlides" src="{{ url_for('static', filename='images/img4.jpg') }}" style="width:100%;height:100%">
+    </div>
+    <div class = "alert_marquee">
+      <h4 style = "font-family: Century Schoolbook L; color: black">Alerts and Updates</h4>
+      <marquee behavior="scroll" direction="up" scrollamount = "5">
+      <p>As per Ministry of Railways, 0.5% discount in base fare of season tickets shall be granted in case of digital payment w.e.f. 01-      Jan-2017.</p>
+      <hr/>
+      <p>Aadhaar verification for getting concessional tickets for Senior Citizens shall be on Voluntary basis from 1st January 2017 and Mandatory from 1st April 2017.</p>
+      <hr/>
+      <p>All India Security Help line No. 182: This facility enables the Railway passengers to avail immediate security related assistance from any place including Trains and Railway premises.</p>
+      <hr/>
+      <p>In case of partial cancellation, diversion or short termination of trains, E-Ticket passengers are required to file TDR as per refund rules to claim the refund.
+      </p><hr/>
+      <p>SMS delivery is subject to effective transmission from your mobile service operator and mobile carrier network availability. In case, you have not received Booking SMS, Please check “Booked Ticket History” before proceeding for new ticket booking.</p>
+      <hr/>
+      </marquee>
+    </div>
+    <div class = "bottom-border">
+      
+    </div>
+  </body>
+</html>
