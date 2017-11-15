@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>make payment</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/payment_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/payment_demo.css') }}">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header>
+            <div class="limiter" style="color:white;font-weight:bold">
+                Accepts online payments
+            </div>
+        </header>
+        <div class="creditCardForm">
+            <div class="heading">
+                <h1>Confirm Recharge</h1>
+            </div>
+            <div class="payment">
+			<h4>{{message}}</h4>
+                <form method = "post" id="myform" action = "http://127.0.0.1:5000/addmoney">
+                    <div class="form-group owner">
+                        <label for="owner">Email-id</label>
+                        <input type="text" class="form-control" name="email" id="owner">
+                    </div>
+					<div class="form-group owner">
+                        <label for="owner">Enter the amount:</label>
+                        <input type="number" class="form-control" name="amount" id="amt">
+                    </div>
+                    <div class="form-group CVV">
+                        <label for="cvv">CVV</label>
+                        <input type="text" class="form-control" name="cvv" id="cvv">
+                    </div>
+                    <div class="form-group" id="card-number-field">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" class="form-control" name="cardNumber" id="cardNumber">
+                    </div>
+                    <div class="form-group" id="expiration-date">
+                        <label>Expiration Date</label>
+                        <select>
+                            <option value="01">January</option>
+                            <option value="02">February </option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <select>
+                            <option value="16"> 2016</option>
+                            <option value="17"> 2017</option>
+                            <option value="18"> 2018</option>
+                            <option value="19"> 2019</option>
+                            <option value="20"> 2020</option>
+                            <option value="21"> 2021</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="credit_cards">
+                        <img src="{{ url_for('static', filename='images/visa.jpg') }}" id="visa">
+                        <img src="{{ url_for('static', filename='images/mastercard.jpg') }}" id="mastercard">
+                        <img src="{{ url_for('static', filename='images/amex.jpg') }}" id="amex">
+                    </div>
+                    <div class="form-group" id="pay-now">
+                        <button class="btn btn-default" id="confirm-purchase">confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+       
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/payment_jquery.payform.min.js') }}" charset="utf-8"></script>
+    <script src="{{ url_for('static', filename='js/payment_script.js') }}"></script>
+</body>
+
+</html>

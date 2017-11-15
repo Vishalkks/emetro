@@ -143,8 +143,10 @@
     </div>
     {% if loggedIn %}
     <br/>
-    <div class = "top-border" style = "margin-top:-20px">
+    <div class = "top-border" style = "margin-top:-20px;height:100px">
       <p class = "links" style="margin-left : 500px">Welcome {{user_name}}!</p>
+      <center><form method="POST" action = "http://127.0.0.1:5000/recharge" id = "form">
+      <input type = "submit" value = "Click to recharge" style = "widht:150px;height:30px"/></center>
     </div>
     
     {% endif %}

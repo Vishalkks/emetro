@@ -7,8 +7,8 @@
     <title>make payment</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="images/styles.css">
-    <link rel="stylesheet" type="text/css" href="images/demo.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/payment_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/payment_demo.css') }}">
 </head>
 
 <body>
@@ -67,9 +67,9 @@
                         </select>
                     </div>
                     <div class="form-group" id="credit_cards">
-                        <img src="images/visa.jpg" id="visa">
-                        <img src="images/mastercard.jpg" id="mastercard">
-                        <img src="images/amex.jpg" id="amex">
+                        <img src="{{ url_for('static', filename='images/visa.jpg') }}" id="visa">
+                        <img src="{{ url_for('static', filename='images/mastercard.jpg') }}" id="mastercard">
+                        <img src="{{ url_for('static', filename='images/amex.jpg') }}" id="amex">
                     </div>
                     <div class="form-group" id="pay-now">
                         <button class="btn btn-default" id="confirm-purchase">confirm</button>
@@ -82,8 +82,8 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="images/jquery.payform.min.js" charset="utf-8"></script>
-    <script src="images/script.js"></script>
+    <script src="{{ url_for('static', filename='js/payment_jquery.payform.min.js') }}" charset="utf-8"></script>
+    <script src="{{ url_for('static', filename='js/payment_script.js') }}"></script>
 </body>
 
 </html>

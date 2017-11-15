@@ -21,11 +21,19 @@ def index():
 		logged_in = True
 		usrname = session['username']
 		logged_out = False
-		return render_template('home.html',loggedIn = logged_in,user_name = usrname,loggedOut = logged_out)
+		con = sqlite3.connect("Emetro.db")
+		con.row_factory = sqlite3.Row
+		cur = con.cursor()
+		cur.execute('select * from user_details where user_id = \''+usrname+'\'')
+		rows = cur.fetchall()
+		bal = rows[0][10]
+		con.close()
+		return render_template('home.html',loggedIn = logged_in,user_name = usrname,loggedOut = logged_out,balance=bal)
 	else:
 		usrname = session['username']
 		temp = initial
 		initial = True
+		
 		return render_template('home.html',loggedIn = logged_in,user_name = usrname,loggedOut = logged_out,init = temp)
    
 @app.route('/login')
@@ -46,11 +54,14 @@ def handle_session():
 		if rows:
 			if rows[0][4] == pwd:
 				session['username'] = request.form['user']
+				con.close()
 				return redirect(url_for('index'))
 			else:
 				return render_template('login.html',incorrect = True)
+				con.close()
 		else:
-				return render_template('login.html',incorrect = True)
+			con.close()
+			return render_template('login.html',incorrect = True)
 
 @app.route('/logout')
 def logout():
@@ -78,10 +89,13 @@ def book_tickets():
 		cur = con.cursor()
 		cur.execute("select * from station_info")
 		rows = cur.fetchall()
+		
+		print(list(rows))
 		con.close()
 		return render_template('book_tickets.html',source_list=rows,dst_list=rows)
 	else:
 		log_in_to_book_tickets = True
+		
 		return render_template('home.html',logInToBook = log_in_to_book_tickets)
 		
 	
@@ -102,7 +116,7 @@ def train_table():
 			cur = con.cursor()
 			cur.execute("select * from train_info TI, train_schedule TS where TI.source = \'"+dst+"\' and TI.destination = \'" +src+"\' and TI.train_id = TS.train_id")
 			rows = cur.fetchall()
-			con.close()
+		
 		
 		return render_template('book_tickets.html', rows1=rows, source = src, destination = dst)
 		
@@ -124,10 +138,12 @@ def enter_quantity():
 		prc = abs(int(rows1[0][4])-int(rows2[0][4]))*10
 		print(prc)
 		display = 0
+		con.close()
 		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,disp = display,price=prc)
 		
 @app.route('/checkbalance', methods = ['POST', 'GET'])
 def check_balance():
+	global usrname
 	if request.method == 'POST':
 		qty = request.form['quantity']
 		price = request.form['price']
@@ -135,12 +151,22 @@ def check_balance():
 		dst = request.form['dst']
 		timings = request.form['timings']
 		total = float(qty)*float(price)
-		balance = 200.0
+		con = sqlite3.connect("Emetro.db")
+		con.row_factory = sqlite3.Row
+		cur = con.cursor()
+		cur.execute('select * from user_details where user_id = \''+session['username']+'\'')
+		rows = cur.fetchall()
+		
+		print(list(rows))
+		bal = rows[0][10]
+		#balance = float(bal)
+		balance = 200
 		balanceSuf = 0
 		display = 1
 		print(total)
 		if total <= balance:
 			balanceSuf = 1
+		con.close()
 		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,tot=total,balance = balanceSuf,disp = display)
 
 
@@ -202,9 +228,39 @@ def enter_user_details():
 		con.execute("INSERT INTO user_details VALUES(\'"+uid+"\',\'"+fn+"\',\'"+ln+"\',\
 		\'"+mail+"\',\'"+pwd+"\',\'"+dob+"\',\'"+street+"\',\'"+city+"\',\'"+pincode+"\',\'"+mb+"\',0)")
 		con.commit()
+		con.close()
 		return render_template('home.html',register = True)
 
+@app.route('/recharge',methods=['POST'])
+def recharge():
+    return render_template('payment.html')	
 
+
+@app.route('/addmoney', methods=['POST'])
+def addmoney():
+    # Amount in cents
+	if request.method == 'POST':
+		amt=request.form['amount']
+		mail=request.form['email']
+		con = sqlite3.connect("Emetro.db")
+		con.row_factory = sqlite3.Row
+		cur = con.cursor()
+		cur.execute("select * from user_details \
+		where email= \'"+mail+"\'")
+		rows = cur.fetchall()
+		if len(rows)==0:
+			 return render_template("payment.html",message="User doesn't exist")
+		a=rows[0]["FirstName"]
+		b=rows[0]["walletBalance"]
+		print(a)
+		con.execute("UPDATE user_details \
+			SET walletBalance = \'"+amt+"\' \
+			WHERE email =\'"+mail+"\'")
+		con.commit()
+		b+=int(amt)
+		con.close()
+		#4532328362901922f
+		return render_template('home.html',user=a,balance=b)
 
 if __name__ == '__main__':
    app.run(debug = True)
