@@ -57,8 +57,8 @@ def handle_session():
 				con.close()
 				return redirect(url_for('index'))
 			else:
-				return render_template('login.html',incorrect = True)
 				con.close()
+				return render_template('login.html',incorrect = True)
 		else:
 			con.close()
 			return render_template('login.html',incorrect = True)
@@ -109,14 +109,14 @@ def train_table():
 		cur = con.cursor()
 		cur.execute("select * from train_info TI, train_schedule TS where TI.source = \'"+src+"\' and TI.destination = \'" +dst+"\' and TI.train_id = TS.train_id")
 		rows = cur.fetchall()
-		con.close()
+		#con.close()
 		if not rows:
 			con = sqlite3.connect("Emetro.db")
 			con.row_factory = sqlite3.Row
 			cur = con.cursor()
 			cur.execute("select * from train_info TI, train_schedule TS where TI.source = \'"+dst+"\' and TI.destination = \'" +src+"\' and TI.train_id = TS.train_id")
 			rows = cur.fetchall()
-		
+		con.close()
 		
 		return render_template('book_tickets.html', rows1=rows, source = src, destination = dst)
 		
@@ -189,7 +189,7 @@ def generate_qrcode():
 		fname = str(latestBooking)+".png"
 		with open(fname,'w+') as fstream:
 			qrcode.png(fstream, scale=5)
-		os.chdir("../")
+		os.chdir("../../")
 		
 	return render_template('qrcode.html',result=url_for('static',filename='qrcodes/'+fname))
 	
