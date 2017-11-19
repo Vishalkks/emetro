@@ -199,16 +199,89 @@ def read_qrcode():
 	qr = qrtools.QR()
 	qrcode = request.form['qrcode']
 	method = request.form['method']
-	if int(method) == 0:
+	#entOexit = request.form['entOexit']
+	point = request.form['point']
+	if method == "File":
 		qr.decode(open('static/qrcodes/'+qrcode,'r'))
 	else:
 		qr.decode_webcam()
-	print("Hello")
-	return "<html><h3> Booking details are : "+qr.data+"</h3></html>"		
+	data = qr.data
+	con = sqlite3.connect("Emetro.db")
+	con.row_factory = sqlite3.Row
+	cur = con.cursor()
+	cur.execute("select * from station_info")
+	rows = list(cur.fetchall())
+	line1Purple = map(lambda x:(x[-3]),rows[:8])
+	line2Purple = map(lambda x:(x[-3]),rows[7:17])
+	line1Green = map(lambda x:(x[-3]),rows[17:28])
+	line2Green = map(lambda x:(x[-3]),rows[27:])
+	src,dst,price = map(str.strip,map(str,data.split(",")))
+	index1 = ()
+	if(src in line1Purple):
+		index1 = (line1Purple.index(src),line1Purple,0) #indicates which line
+	if(src in line2Purple):
+		index1 = (line2Purple.index(src),line2Purple,0)
+	if(src in line1Green):
+		index1 = (line1Green.index(src),line1Green,1)
+	if(src in line2Green):
+		index1 = (line2Green.index(src),line2Green,1)
+		
+	index2 = ()
+	if(dst in line1Purple):
+		index2 = (line1Purple.index(dst),line1Purple,0) #indicates which line
+	if(dst in line2Purple):
+		index2 = (line2Purple.index(dst),line2Purple,0)
+	if(dst in line1Green):
+		index2 = (line1Green.index(dst),line1Green,1)
+	if(dst in line2Green):
+		index2 = (line2Green.index(dst),line2Green,1)
+		
+	#if((point in index1[1] and index1[0] > index1[1].index(point)) or (point in index2[1] and index2[0] < index2[1].index(point)))
+	#mys and yel is 0, byps and nag is 1
+	valid = True
+	if(index1[1] == index2[1]): #Same line
+		if(point in index1[1] and ( (index1[1].index(point) > index1[0] and index1[1].index(point) < index2[0]) or (index1[1].index(point) > index1[0] and index1[1].index(point) < index2[0]) )):
+			valid = True
+		else:
+			valid = False
+	
+	
+	
+	
+	elif(index1[2] == index2[2]): #Either the purple line or the green line
+		if( (point in index1[1] and (index1[1].index(point) > index1[0] )) or (point in index2[1] and (index2[1].index(point) < index2[0]))):
+			valid = True
+		else:
+			valid = False
+			
+	#cases where the lines are not the same.
+	elif(index1[1] == line1Purple or index1[1] == line1Green):
+		if(point in index1[1] and index1[1].index(point) > index1[0]):
+			valid = True
+		elif((index2[1] == line2Green or index2[1] == line2Purple) and (point in index2[1] and index2[1].index(point) < index2[0])):
+			valid = True
+		else:
+			valid = False
+			
+	
+		
+	elif(index1[1] == line2Purple or index1[1] == line2Green):
+		if(point in index1[1] and index1[1].index(point) < index1[0]):
+			valid = True
+		elif((index2[1] == line1Green or index2[1] == line1Purple) and (point in index2[1] and index2[1].index(point) > index2[0])):
+			valid = True
+		else:
+			valid = False
+	
+	print(valid)
+	if(valid):
+		return render_template("qroutput.html")
+	else:
+		return render_template("qroutput1.html")
 	
 @app.route('/scanqr',methods = ['GET'])
 def scan_qrcode():
-	return render_template('qrcode_read.html')
+	return render_template('qrread.html')
 
 @app.route('/enter_user_details', methods=['POST'])
 def enter_user_details():
@@ -263,4 +336,5 @@ def addmoney():
 		return render_template('home.html',user=a,balance=b)
 
 if __name__ == '__main__':
-   app.run(debug = True)
+	app.config["CACHE_TYPE"] = "null"
+	app.run(debug = True)
