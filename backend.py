@@ -240,7 +240,7 @@ def read_qrcode():
 	#mys and yel is 0, byps and nag is 1
 	valid = True
 	if(index1[1] == index2[1]): #Same line
-		if(point in index1[1] and ( (index1[1].index(point) > index1[0] and index1[1].index(point) < index2[0]) or (index1[1].index(point) > index1[0] and index1[1].index(point) < index2[0]) )):
+		if(point in index1[1] and ( (index1[1].index(point) >= index1[0] and index1[1].index(point) <= index2[0]) or (index1[1].index(point) >= index1[0] and index1[1].index(point) <= index2[0]) )):
 			valid = True
 		else:
 			valid = False
@@ -249,16 +249,16 @@ def read_qrcode():
 	
 	
 	elif(index1[2] == index2[2]): #Either the purple line or the green line
-		if( (point in index1[1] and (index1[1].index(point) > index1[0] )) or (point in index2[1] and (index2[1].index(point) < index2[0]))):
+		if( (point in index1[1] and (index1[1].index(point) >= index1[0] )) or (point in index2[1] and (index2[1].index(point) <= index2[0]))):
 			valid = True
 		else:
 			valid = False
 			
 	#cases where the lines are not the same.
 	elif(index1[1] == line1Purple or index1[1] == line1Green):
-		if(point in index1[1] and index1[1].index(point) > index1[0]):
+		if(point in index1[1] and index1[1].index(point) >= index1[0]):
 			valid = True
-		elif((index2[1] == line2Green or index2[1] == line2Purple) and (point in index2[1] and index2[1].index(point) < index2[0])):
+		elif((index2[1] == line2Green or index2[1] == line2Purple) and (point in index2[1] and index2[1].index(point) <= index2[0])):
 			valid = True
 		else:
 			valid = False
@@ -266,9 +266,9 @@ def read_qrcode():
 	
 		
 	elif(index1[1] == line2Purple or index1[1] == line2Green):
-		if(point in index1[1] and index1[1].index(point) < index1[0]):
+		if(point in index1[1] and index1[1].index(point) <= index1[0]):
 			valid = True
-		elif((index2[1] == line1Green or index2[1] == line1Purple) and (point in index2[1] and index2[1].index(point) > index2[0])):
+		elif((index2[1] == line1Green or index2[1] == line1Purple) and (point in index2[1] and index2[1].index(point) >= index2[0])):
 			valid = True
 		else:
 			valid = False
