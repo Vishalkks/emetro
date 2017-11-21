@@ -98,7 +98,7 @@ def addmoney():
 		where email= \'"+mail+"\'")
 		rows = cur.fetchall()
 		if len(rows)==0:
-			 return render_template("pay.html",message="User doesn't exist")
+			 return render_template("payment.html",message="User doesn't exist")
 		a=rows[0]["FirstName"]
 		b=rows[0]["walletBalance"]
 		print(a)

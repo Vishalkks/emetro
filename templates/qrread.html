@@ -164,13 +164,21 @@ form input[type="submit"]:focus {
     
     <form id="form" method = "POST"  action = "http://127.0.0.1:5000/readqr" class="topBefore">
 	      <div class="field name-box">
-		        <input type="text" id="name" placeholder="Scan or File" name="method"/>
+		        <select name = "method" id = "name">
+                  <option selected = "selected">Upload</option>
+                  <option>Scan</option>
+                </select>
         		<label for="name">Method</label>
 		        <span class="ss-icon">Valid!</span>
 	      </div>
 
 	      <div class="field email-box">
-		        <input type="text" id="text" name = "point" placeholder="Scanning point"/>
+		        <select name = "point" id = "text">
+                  <option selected = "selected"></option>
+                  {% for row in dst_list %}
+                  <option>{{row["station_name"]}}</option>
+                  {% endfor %}
+                </select>
 		        <label for="point">Scanning point</label>
 		        <span class="ss-icon">Valid!</span>
 	      </div>

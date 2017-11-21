@@ -159,13 +159,22 @@ def check_balance():
 		
 		print(list(rows))
 		bal = rows[0][10]
-		#balance = float(bal)
-		balance = 200
+		balance = float(bal)
+		print('bal',bal)
+		#balance = 200
 		balanceSuf = 0
 		display = 1
 		print(total)
 		if total <= balance:
 			balanceSuf = 1
+			balance -= total
+			con.close()
+			con = sqlite3.connect("Emetro.db")
+			con.row_factory = sqlite3.Row
+			cur = con.cursor()
+			cur.execute("UPDATE user_details \
+			SET walletBalance = \'"+str(balance)+"\' \
+			WHERE user_id =\'"+session['username']+"\'")
 		con.close()
 		return render_template('enter_quantity.html',source=src,destination=dst,time=timings,tot=total,balance = balanceSuf,disp = display)
 
@@ -200,7 +209,7 @@ def read_qrcode():
 	qrcode = request.form['qrcode']
 	method = request.form['method']
 	#entOexit = request.form['entOexit']
-	point = request.form['point']
+	point = str(request.form['point'])
 	if method == "File":
 		qr.decode(open('static/qrcodes/'+qrcode,'r'))
 	else:
@@ -274,6 +283,7 @@ def read_qrcode():
 			valid = False
 	
 	print(valid)
+	print(src,dst,point)
 	if(valid):
 		return render_template("qroutput.html")
 	else:
@@ -281,7 +291,12 @@ def read_qrcode():
 	
 @app.route('/scanqr',methods = ['GET'])
 def scan_qrcode():
-	return render_template('qrread.html')
+	con = sqlite3.connect("Emetro.db")
+	con.row_factory = sqlite3.Row
+	cur = con.cursor()
+	cur.execute("select * from station_info")
+	rows = cur.fetchall()
+	return render_template('qrread.html',dst_list=rows)
 
 @app.route('/enter_user_details', methods=['POST'])
 def enter_user_details():
@@ -308,7 +323,6 @@ def enter_user_details():
 def recharge():
     return render_template('payment.html')	
 
-
 @app.route('/addmoney', methods=['POST'])
 def addmoney():
     # Amount in cents
@@ -322,7 +336,7 @@ def addmoney():
 		where email= \'"+mail+"\'")
 		rows = cur.fetchall()
 		if len(rows)==0:
-			 return render_template("payment.html",message="User doesn't exist")
+			 return render_template("pay.html",message="User doesn't exist")
 		a=rows[0]["FirstName"]
 		b=rows[0]["walletBalance"]
 		print(a)
@@ -331,9 +345,7 @@ def addmoney():
 			WHERE email =\'"+mail+"\'")
 		con.commit()
 		b+=int(amt)
-		con.close()
-		#4532328362901922f
-		return render_template('home.html',user=a,balance=b)
+		return render_template('home.html',user=a,balance=b,state="logout")
 
 if __name__ == '__main__':
 	app.config["CACHE_TYPE"] = "null"
