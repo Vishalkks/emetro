@@ -2,8 +2,14 @@ import sqlite3
 conn = sqlite3.connect('Emetro.db')
 print("Opened database successfully")
 
-#conn.execute("drop table train_info")
-#conn.execute("drop table station_info")
+
+conn.execute("drop table train_schedule")
+conn.execute("drop table train_info")
+conn.execute("drop table station_info")
+
+
+
+
 
 conn.execute('CREATE TABLE train_info(train_id varchar(10) primary key,\
        source varchar(100) not null,\

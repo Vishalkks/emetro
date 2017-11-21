@@ -24,7 +24,7 @@
             </div>
             <div class="payment">
 			<h4>{{message}}</h4>
-                <form method = "post" id="myform" action = "http://127.0.0.1:5000/addmoney">
+                <form method = "post" id="myform" onsubmit="return validatecard(this)" action = "http://127.0.0.1:5000/addmoney">
                     <div class="form-group owner">
                         <label for="owner">Email-id</label>
                         <input type="text" class="form-control" name="email" id="owner">
@@ -83,7 +83,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='js/payment_jquery.payform.min.js') }}" charset="utf-8"></script>
-    <script src="{{ url_for('static', filename='js/payment_script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/my.js') }}"></script>
 </body>
 
 </html>
